@@ -1,4 +1,22 @@
 <?php
+    include_once("class/function.php");
+    $obj=new adminBlog();
+    if(isset( $_POST['admin_login'] ) ){         
+        $obj->admin_login($_POST);        
+    }    
+
+    // start session to access data in $_SESSION
+    session_start();
+    $id=$_SESSION['adminID'];
+    if($id!=null){        
+        //after loged in >if someone wants to stay in login(index.php) page 
+        //it won't allow you to go to index.php page again
+        // redirect to dashboard.php page after coming to this login(index.php) page
+        header("location:dashboard.php");
+    }
+?>
+
+<?php
     include_once("includes/head.php");
 ?>
     <body class="bg-primary">
@@ -11,50 +29,39 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
                                     <div class="card-body">
-                                        <form>
+                                        <form action="" method="POST">
                                             <div class="form-group">
                                                 <label class="small mb-1" for="inputEmailAddress">Email</label>
-                                                <input class="form-control py-4" id="inputEmailAddress" type="email" placeholder="Enter email address" />
+                                                <input name="admin_email" class="form-control py-4" id="inputEmailAddress" type="email" placeholder="Enter email address" />
                                             </div>
                                             <div class="form-group">
                                                 <label class="small mb-1" for="inputPassword">Password</label>
-                                                <input class="form-control py-4" id="inputPassword" type="password" placeholder="Enter password" />
+                                                <input name="admin_pass" class="form-control py-4" id="inputPassword" type="password" placeholder="Enter password" />
                                             </div>
-                                            <div class="form-group">
+                                            <!-- <div class="form-group">
                                                 <div class="custom-control custom-checkbox">
                                                     <input class="custom-control-input" id="rememberPasswordCheck" type="checkbox" />
                                                     <label class="custom-control-label" for="rememberPasswordCheck">Remember password</label>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <a class="small" href="password.html">Forgot Password?</a>
-                                                <a class="btn btn-primary" href="index.html">Login</a>
+                                                <input type="submit" value="log in" name="admin_login" class="btn btn-primary">                                                
                                             </div>
                                         </form>
+
                                     </div>
-                                    <div class="card-footer text-center">
+                                    <!-- <div class="card-footer text-center">
                                         <div class="small"><a href="register.html">Need an account? Sign up!</a></div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </main>
             </div>
-            <div id="layoutAuthentication_footer">
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2020</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
-            </div>
+            
+            <?php include_once("includes/footer.php");?>
+            
         </div>
        <?php include_once("includes/script.php");?>
     </body>

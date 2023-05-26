@@ -1,0 +1,1 @@
+INSERT INTO `admin_info` (`id`, `admin_email`, `admin_name`, `admin_pass`) VALUES ('1', 'admin@gmail.com', 'Alvi', MD5('123'));
