@@ -1,14 +1,27 @@
 
 <?php
-    include('class/function.php');
-    
-    // start session to access $_SESSION data
+    include('class/function.php');   
+    $obj=new adminBlog(); 
+    // start session to access all $_SESSION data passed from function.php file.
     session_start();
-    $id=$_SESSION['adminID'];
-    if($id==null){
-        // if someone did not log in then don't let them access this page.
+    // page where we want to access session data we need to session_start() there.    
+    if( empty($_SESSION['adminID']) ){
+        // if someone did not log in:adminID don't exist/false: then don't let them access this page.
         //redirect them to login(index.php) page
         header("location:index.php");
+    }
+
+    if(isset($_GET['adminlogout'])){
+        if($_GET['adminlogout']=='logout'){
+            $obj->adminLogout();
+        }
+    }
+
+    if($view=="manage_category"){
+        // include("view/manage_category_view.php");
+        header("Refresh:30;");
+        //reresh page after every 30 seconds                        
+        // header("Refresh:30;url=manage_category.php");                            
     }
 ?>
 
@@ -28,7 +41,7 @@
                             include("view/add_category_view.php");
                         }
                         elseif($view=="manage_category"){
-                            include("view/manage_category_view.php");
+                            include("view/manage_category_view.php");                            
                         }
                         elseif($view=="add_post"){
                             include("view/add_post_view.php");

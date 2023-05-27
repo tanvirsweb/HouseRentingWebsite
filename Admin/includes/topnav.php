@@ -18,7 +18,11 @@
                         <a class="dropdown-item" href="#">Settings</a>
                         <a class="dropdown-item" href="#">Activity Log</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="login.html">Logout</a>
+                        <a class="dropdown-item" href="?adminlogout=logout">Logout</a>
+                        <!-- redirect to this same page with parameter: adminlogout=logout 
+                        cehck it on template.php file where this file is included
+                        and redirect to login page(index.php)
+                        -->
                     </div>
                 </li>
             </ul>

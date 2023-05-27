@@ -29,7 +29,7 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-5">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">LogIn</h3></div>
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">SignUp</h3></div>
                                     <div class="card-body">
                                         <form action="" method="POST">
                                             <div class="form-group">
@@ -40,6 +40,11 @@
                                                 <label class="small mb-1" for="inputPassword">Password</label>
                                                 <input name="admin_pass" class="form-control py-4" id="inputPassword" type="password" placeholder="Enter password" />
                                             </div>
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="rinputPassword">Confirm Password</label>
+                                                <input name="radmin_pass" class="form-control py-4" id="rinputPassword" type="password" placeholder="Enter password" />
+                                                <div id="rtxt"></div>
+                                            </div>
                                             <!-- <div class="form-group">
                                                 <div class="custom-control custom-checkbox">
                                                     <input class="custom-control-input" id="rememberPasswordCheck" type="checkbox" />
@@ -47,13 +52,13 @@
                                                 </div>
                                             </div> -->
                                             <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <input type="submit" value="Log In" name="admin_login" class="btn btn-primary">                                                
+                                                <input type="submit" value="Sign Up" name="admin_signin" class="btn btn-primary" id="submit">                                                
                                             </div>
                                         </form>
 
                                     </div>
                                     <div class="card-footer text-center">
-                                        <div class="small"><a href="admin_signup.php">Need an account? SignUp!</a></div>
+                                        <div class="small"><a href="index.php">Already have an account? SignIn!</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -66,5 +71,34 @@
             
         </div>
        <?php include_once("includes/script.php");?>
+
+       <?php include("includes/admin_signup_password_match.php"); ?>
+    <!-----------------Match Password-------------->
+    <!-- <script>        
+        const passwordReInput = document.getElementById('rinputPassword');
+        const passwordInput=document.getElementById('inputPassword');
+        
+        const submitBtn=document.getElementById("submit");
+        submitBtn.disabled = true;
+
+        // check if password matches
+        passwordReInput.addEventListener('input', function(event) {
+        // Handle the input event here
+            let v1=event.target.value;
+            let v2=passwordInput.value;
+            document.getElementById('rinputPassword').style.visibility='visible';
+            if(v1==v2)
+            {                
+                document.getElementById('rtxt').innerHTML="";
+                submitBtn.disabled = false;
+            }
+            else{                                
+                document.getElementById('rtxt').innerHTML="pass word did not matched !!";
+                submitBtn.disabled = true;
+            }
+                        
+        });
+    </script> -->
+
     </body>
 </html>
