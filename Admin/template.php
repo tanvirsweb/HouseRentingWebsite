@@ -9,6 +9,8 @@
         // if someone did not log in:adminID don't exist/false: then don't let them access this page.
         //redirect them to login(index.php) page
         header("location:index.php");
+        $admin_name=$_SESSION['admin_name'];
+
     }
 
     if(isset($_GET['adminlogout'])){
@@ -48,6 +50,12 @@
                         }
                         elseif($view=="manage_post"){
                             include("view/manage_post_view.php");
+                        }
+                        elseif($view=="edit_img"){
+                            include("view/edit_img_view.php");
+                        }
+                        elseif($view=="edit_post"){
+                            include("view/edit_post_view.php");
                         }
 
                     }

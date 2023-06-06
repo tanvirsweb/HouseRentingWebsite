@@ -2,8 +2,8 @@
     include_once("class/function.php");
     $obj=new adminBlog();
 
-    if(isset( $_POST['admin_login'] ) ){         
-        $obj->admin_login($_POST);        
+    if(isset( $_POST['admin_signup'] ) ){         
+        $rmsg=$obj->admin_signup($_POST);        
     }    
 
     // start session to access data in $_SESSION passed from function.php file which is included here.
@@ -32,6 +32,12 @@
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">SignUp</h3></div>
                                     <div class="card-body">
                                         <form action="" method="POST">
+                                            
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="admin_name">Name</label>
+                                                <input name="admin_name" class="form-control py-4" id="admin_name" type="text" placeholder="Enter your name" />
+                                            </div>
+                                            
                                             <div class="form-group">
                                                 <label class="small mb-1" for="inputEmailAddress">Email</label>
                                                 <input name="admin_email" class="form-control py-4" id="inputEmailAddress" type="email" placeholder="Enter email address" />
@@ -52,12 +58,13 @@
                                                 </div>
                                             </div> -->
                                             <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <input type="submit" value="Sign Up" name="admin_signin" class="btn btn-primary" id="submit">                                                
+                                                <input type="submit" value="Sign Up" name="admin_signup" class="btn btn-primary" id="submit">                                                
                                             </div>
                                         </form>
 
                                     </div>
                                     <div class="card-footer text-center">
+                                        <div class="text-success"><?php if(isset($rmsg)){ echo $rmsg;}?></div>
                                         <div class="small"><a href="index.php">Already have an account? SignIn!</a></div>
                                     </div>
                                 </div>
@@ -65,6 +72,8 @@
                         </div>
                     </div>
                 </main>
+                <br>
+                <br>                
             </div>
             
             <?php include_once("includes/footer.php");?>
