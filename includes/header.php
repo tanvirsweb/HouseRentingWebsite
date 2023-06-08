@@ -8,15 +8,29 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
 
         <ul class="navbar-nav ml-auto">
-        <?php while($category=mysqli_fetch_assoc($getcat)){ ?>
-            <li class="nav-item">
-            <a class="nav-link" href="index.php">
+            <!-- $getcat is initialized in index.php &  single_post.php file -->
+        <?php while($category=mysqli_fetch_assoc($getcat)){ 
+            if(isset($_GET['status'])){                
+                if($_GET['status']=='filterctg' and $_GET['ctg']==$category['cat_name']){
+                    echo '<li class="nav-item active">';
+                }
+                else{
+                    echo '<li class="nav-item">';
+                }                
+            }
+            else{
+                echo '<li class="nav-item">';
+            }
+            ?>
+            
+            <!-- <li class="nav-item"> -->
+            <a class="nav-link" href="index.php?status=filterctg&&ctg=<?php echo $category['cat_name']; ?>">
                 <?php echo $category['cat_name']; ?>
             </a>
             </li> 
         <?php } ?>
             <li>
-            <a class="nav-link" href="#">Contact Us</a>
+            <a class="nav-link" href="Admin/index.php">Sign In</a>
             </li>
         </ul>
         </div>

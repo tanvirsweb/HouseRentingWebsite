@@ -7,14 +7,18 @@
 
         // action="" -> when form of this page is submitted it will redirect to this page.As name of page is not written.
         if(isset($_POST['change_img_btn'])){
-            $msg=$obj->edit_img($_POST);
+            // $msg=$obj->edit_img($_POST);
+            $Arr=$obj->edit_img($_POST);                        
+            // after updating image: it has new image.If you want to update image again from same page-> using previous imagename error would occur.New image will be uploaded but this one will remain.                        
+            $editimg_name=$Arr['imgname'];
+            $msg=$Arr['msg'];                            
         }
     }
 ?>
 
 <div class="shadow m-5 p-5">   
-    <div class="text-success text-center">
-        <?php if(isset($msg)){echo $msg;} ?>
+    <div class="text-success text-center bg-light">
+        <?php if(isset($msg)){echo $msg."\n";} ?>
     </div> 
     <!-- enctype="multipart/form-data" we will take file input -->
     <form action="" method="POST" enctype="multipart/form-data">

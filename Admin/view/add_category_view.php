@@ -22,6 +22,6 @@
             <label class="mb-1" for="cat_des">Category Description</label>
             <input name="cat_des" class="form-control py-4" id="cat_des" type="text" required/>
         </div>
-        <input type="submit" name="add_cat" value="Add Category" class="form-control btn btn-primary">
+        <input type="submit" name="add_cat" value="Add Category" class="btn btn-primary">
     </form>
 </div>

@@ -131,16 +131,26 @@
 
         }
 
+        // display post for admin (for manage_post_view.php page)
         public function display_post(){
-            $query="SELECT * FROM post_with_ctg";
+            $query="SELECT * FROM post_with_ctg ORDER BY post_date DESC,post_id DESC";
             if(mysqli_query($this->conn,$query)){
                 $posts=mysqli_query($this->conn,$query);
                 return $posts;
             }
         }
 
+        // display post for public (for blog_posts.php file)
         public function display_post_public(){
-            $query="SELECT * FROM post_with_ctg WHERE post_status=1";
+            $query="SELECT * FROM post_with_ctg WHERE post_status=1 ORDER BY post_date DESC,post_id DESC";
+            if(mysqli_query($this->conn,$query)){
+                $posts=mysqli_query($this->conn,$query);
+                return $posts;
+            }
+        }
+        // fileter blog post by category:display posts of a specifiec category only
+        public function display_post_public_by_category($cat){
+            $query="SELECT * FROM post_with_ctg WHERE post_status=1 and cat_name='$cat' ORDER BY post_date DESC,post_id DESC";
             if(mysqli_query($this->conn,$query)){
                 $posts=mysqli_query($this->conn,$query);
                 return $posts;
@@ -152,9 +162,8 @@
             $previousImg=$data['editimg_name'];
 
             $imgname=$_FILES['change_img']['name'];
-            $temp = explode(".",$imgname);
-            $imgname =round(microtime(true)) . '.' . end($temp); 
-
+            $temp = explode(".",$imgname);//break string into an array wherever '.' found
+            $imgname =round(microtime(true)) . '.' . end($temp);//generate a random number and concatenate it with file name extension of the image.             
             $tmp_name=$_FILES['change_img']['tmp_name'];
 
             $query="UPDATE posts SET post_img='$imgname' WHERE post_id=$id";
@@ -163,15 +172,18 @@
                 unlink('../upload/'.$previousImg);
                 // upload new image
                 move_uploaded_file($tmp_name,'../upload/'.$imgname);
-                return "Thumbnail Updated Successfully!!";
+                $Arr['msg']="Thumbnail Updated Successfully!!";
+                $Arr['imgname']=$imgname;
+                return $Arr;
             }
         }
 
         public function get_post_info($id){
             $query="SELECT * FROM post_with_ctg WHERE post_id=$id";
             if(mysqli_query($this->conn,$query)){
-                $post_info=mysqli_query($this->conn,$query);
-                $post=mysqli_fetch_assoc($post_info);
+                // $post_info=mysqli_query($this->conn,$query);
+                // $post=mysqli_fetch_assoc($post_info);
+                $post=mysqli_query($this->conn,$query);
                 return $post;
             }
         }
@@ -179,8 +191,8 @@
         public function delete_data_by_id($id){
 
             $catch_img="SELECT * FROM students WHERE id=$id";
-            $delete_std_info=mysqli_query($this->conn,$catch_img);
-            $std_infoDel = mysqli_fetch_assoc($delete_std_info);
+            $delete_std_info=mysqli_query($this->conn,$catch_img);//tuples(row) is stored
+            $std_infoDel = mysqli_fetch_assoc($delete_std_info);//query tuple is converted to array
             $deleteImg_data=$std_infoDel['std_img'];            
 
             $query="DELETE FROM students WHERE id=$id";
@@ -192,7 +204,6 @@
         }
 
         public function delete_post($id,$deleteImg_data){
-
             // $catch_img="SELECT * FROM posts WHERE post_id=$id";
             // $delete_post_info=mysqli_query($this->conn,$catch_img);
             // $post_infoDel = mysqli_fetch_assoc($delete_post_info);

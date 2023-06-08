@@ -1,5 +1,5 @@
 <?php 
-    $posts=$obj->display_post_public();
+    // $posts=$obj->display_post_public();
 ?>
 <div class="col-lg-8">
     <div class="all-blog-posts">
@@ -12,7 +12,8 @@
                 </div>
                 <div class="down-content">
                     <span><?php echo $postdata['cat_name']; ?></span>
-                    <a href="single_post.php?view=postview&&id=<?php echo $postdata['post_id'];?>">
+                    <!-- <a href="single_post.php?view=postview&&id=<?php echo $postdata['post_id'];?>"> -->
+                    <a href="index.php?view=postview&&id=<?php echo $postdata['post_id'];?>">
                         <h4><?php echo $postdata['post_title']; ?></h4>
                     </a>
                     <ul class="post-info">

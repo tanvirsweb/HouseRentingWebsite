@@ -10,7 +10,7 @@
                 $allcat=$obj->display_category();
                 while($category=mysqli_fetch_assoc($allcat)){ 
                 ?>
-                    <li><a href="#">- <?php echo $category['cat_name']; ?> </a></li>
+                    <li><a href="index.php?status=filterctg&&ctg=<?php echo $category['cat_name']; ?>">- <?php echo $category['cat_name']; ?> </a></li>
                 <?php } ?>
             </ul>
         </div>

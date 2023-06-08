@@ -1,0 +1,11 @@
+TANVIR ANJOM SIDDIQUE
+RUET,CSE_19_A
+
+1) put this folder inside -> xampp/htdocs
+2) open xampp->start (Apache& MySql server) ->admin of MySql->create database "blogproject"
+->import this file "blogproject.sql" of Blog folder to the database.
+3) Run project in browser.
+
+I got some help from :
+Youtube: Darun IT
+google: StackOverflow,w3school etc.

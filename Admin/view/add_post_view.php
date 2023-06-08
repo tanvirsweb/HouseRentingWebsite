@@ -51,6 +51,6 @@
                 <option value="0">Unpublished</option>
             </select>
         </div>
-        <input type="submit" name="add_post" value="Add Post" class="form-control btn btn-primary">
+        <input type="submit" name="add_post" value="Add Post" class="btn btn-primary">
     </form>
 </div>

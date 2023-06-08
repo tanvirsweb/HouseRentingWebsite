@@ -2,7 +2,24 @@
     include("admin/class/function.php");
     $obj=new adminBlog();
     $getcat=$obj->display_category();        
+    // inside header.php file we will we $getcat values to show categories in navbar.
+
+    if(isset($_GET['status']) && isset($_GET['ctg'])){
+          $posts=$obj->display_post_public_by_category($_GET['ctg']);        
+    }
+    elseif(isset($_GET['view']) && isset($_GET['id'])){
+      if($_GET['view']=='postview'){
+          $posts=$obj->get_post_info($_GET['id']);
+          // $posts=$obj->display_post_public();
+      }
+    }
+    else{
+      $posts=$obj->display_post_public();
+      // inside blogpost.php file we will use $posts to display blog posts.
+    }    
+
 ?>
+
 <?php
   include_once("includes/head.php");
 ?>
@@ -23,10 +40,12 @@
     <?php
         include_once("includes/banner.php");
     ?>
-    <!-- call to action -->
-    <?php
-        include_once("includes/cta.php");
-    ?>
+    <!-- call to action  download ..-->
+    <!-- <?php
+        // include_once("includes/cta.php");
+    ?> -->
+    <br>
+    <hr>
 
 
     <section class="blog-posts">

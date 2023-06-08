@@ -1,3 +1,6 @@
+<?php 
+    $posts_recent=$obj->display_post_public();
+?>
 <div class="col-lg-12">
     <div class="sidebar-item recent-posts">
         <div class="sidebar-heading">
@@ -5,21 +8,15 @@
         </div>
         <div class="content">
             <ul>
-                <li><a href="post-details.html">
-                        <h5>Vestibulum id turpis porttitor sapien facilisis scelerisque</h5>
-                        <span>May 31, 2020</span>
+            <?php while($postdata=mysqli_fetch_assoc($posts_recent)){ ?>
+                <li>
+                    <!-- <a href="single_post.php?view=postview&&id=<?php echo $postdata['post_id'];?>"> -->
+                    <a href="index.php?view=postview&&id=<?php echo $postdata['post_id'];?>">
+                        <h5><?php echo $postdata['post_title']; ?></h5>
+                        <span><?php echo $postdata['post_date']; ?></span>
                     </a>
                 </li>
-                <li><a href="post-details.html">
-                        <h5>Suspendisse et metus nec libero ultrices varius eget in risus</h5>
-                        <span>May 28, 2020</span>
-                    </a>
-                </li>
-                <li><a href="post-details.html">
-                        <h5>Swag hella echo park leggings, shaman cornhole ethical coloring</h5>
-                        <span>May 14, 2020</span>
-                    </a>
-                </li>
+                <?php } ?>
             </ul>
         </div>
     </div>

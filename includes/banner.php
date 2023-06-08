@@ -1,6 +1,32 @@
+
+<?php
+    $posts_banner=$obj->display_post_public();
+?>
 <div class="main-banner header-text">
     <div class="container-fluid">
-    <div class="owl-banner owl-carousel">
+        <div class="owl-banner owl-carousel">
+        <?php while($postdata=mysqli_fetch_assoc($posts_banner)){ ?>
+            <div class="item">
+                <img src="upload/<?php echo $postdata['post_img']; ?>" alt="">
+                <div class="item-content">
+                    <div class="main-content">
+                    <div class="meta-category">
+                        <a href="index.php?view=postview&&id=<?php echo $postdata['post_id'];?>">
+                            <span><?php echo $postdata['post_title']; ?></span>
+                        </a>
+                    </div>                    
+                    <!-- <h4>Morbi dapibus condimentum</h4>                     -->
+                    <ul class="post-info">
+                        <li><a href="#">Admin</a></li>
+                        <li><a href="#"><?php echo $postdata['post_date']; ?></a></li>
+                        <li><a href="#"><?php echo $postdata['post_comment_count']; ?> Comments</a></li>
+                    </ul>
+                    </div>
+                </div>
+            </div>
+            <?php } ?>
+
+    <!--
         <div class="item">
         <img src="assets/images/banner-item-01.jpg" alt="">
         <div class="item-content">
@@ -17,6 +43,7 @@
             </div>
         </div>
         </div>
+
         <div class="item">
         <img src="assets/images/banner-item-02.jpg" alt="">
         <div class="item-content">
@@ -96,7 +123,7 @@
             </ul>
             </div>
         </div>
-        </div>
+        </div> -->
     </div>
     </div>
 </div>
