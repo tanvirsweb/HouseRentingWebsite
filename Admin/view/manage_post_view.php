@@ -5,10 +5,18 @@
         if($_GET['status']=='delpost'){
             $id=$_GET['id'];
             $delimg_name=$_GET['deltimg_name'];
-            $msg=$obj->delete_post($id,$delimg_name);            
+            $msg=$obj->delete_post($id,$delimg_name);  
+            
+            if(!headers_sent()){//if header is not send redirect using php function header();else use JS
+                header('Location:manage_post.php');
+            }
+            else{
+                echo '<script type="text/javascript">window.location.href="manage_post.php";</script>';
+            }
         }
     }
 ?>
+
 <div class="container">
     <h2 class="text-center">Manage Post</h2>
     <!-- CREATE VIEW post_with_ctg AS SELECT post_id,post_title,post_content,post_img,post_author,post_date,post_comment_count,post_summery,post_tag,post_status,cat_id,cat_name FROM posts INNER JOIN category ON posts.post_ctg=category.cat_id; -->

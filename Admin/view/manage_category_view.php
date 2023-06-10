@@ -14,6 +14,12 @@
 
             // it will automatically refresh in 0 seconds, you can change time in refresh
             // hence after deleting a tuple we can see the updated page
+            if(!headers_sent()){//if header is not send redirect using php function header();else use JS
+                header('Location:manage_category.php');
+            }
+            else{
+                echo '<script type="text/javascript">window.location.href="manage_category.php";</script>';
+            }
 
 //    
         }
