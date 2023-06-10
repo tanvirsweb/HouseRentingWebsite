@@ -94,6 +94,23 @@
                 return $category;
             }
         }
+        public function display_category_byID($id){
+            $query="SELECT * FROM category WHERE cat_id=$id";
+            if(mysqli_query($this->conn,$query)){
+                $category=mysqli_query($this->conn,$query);
+                return $category;
+            }
+        }
+        public function update_category($data){
+            $cat_id=$data['cat_id'];
+            $cat_name=$data['cat_name'];
+            $cat_des=$data['cat_des'];
+
+            $query="UPDATE category SET cat_name='$cat_name',cat_des='$cat_des' WHERE cat_id=$cat_id ";
+            if(mysqli_query($this->conn,$query)){
+                return "Category Updated Successfully!!";
+            }
+        }
 
         public function delete_category_byID($id){
             $query="DELETE FROM category WHERE cat_id=$id";
@@ -140,6 +157,13 @@
             }
         }
 
+        public function display_distince_post_tag(){
+            $query="SELECT DISTINCT post_tag FROM post_with_ctg ORDER BY post_tag";
+            if(mysqli_query($this->conn,$query)){
+                $posts=mysqli_query($this->conn,$query);
+                return $posts;
+            }
+        }
         // display post for public (for blog_posts.php file)
         public function display_post_public(){
             $query="SELECT * FROM post_with_ctg WHERE post_status=1 ORDER BY post_date DESC,post_id DESC";
@@ -188,20 +212,7 @@
             }
         }
 
-        public function delete_data_by_id($id){
-
-            $catch_img="SELECT * FROM students WHERE id=$id";
-            $delete_std_info=mysqli_query($this->conn,$catch_img);//tuples(row) is stored
-            $std_infoDel = mysqli_fetch_assoc($delete_std_info);//query tuple is converted to array
-            $deleteImg_data=$std_infoDel['std_img'];            
-
-            $query="DELETE FROM students WHERE id=$id";
-            if(mysqli_query($this->conn,$query)){
-                unlink('upload/'.$deleteImg_data);
-                // delete image
-                return "Deleted Row Successfully";
-            }
-        }
+       
 
         public function delete_post($id,$deleteImg_data){
             // $catch_img="SELECT * FROM posts WHERE post_id=$id";

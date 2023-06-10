@@ -1,3 +1,6 @@
+<?php
+    $posts=$obj->display_distince_post_tag();
+?>
 <div class="col-lg-4">
     <div class="sidebar">
         <div class="row">
@@ -17,13 +20,13 @@
                     </div>
                     <div class="content">
                         <ul>
-                            <li><a href="#">Lifestyle</a></li>
-                            <li><a href="#">Creative</a></li>
-                            <li><a href="#">HTML5</a></li>
-                            <li><a href="#">Inspiration</a></li>
-                            <li><a href="#">Motivation</a></li>
-                            <li><a href="#">PSD</a></li>
-                            <li><a href="#">Responsive</a></li>
+                        <?php while($postdata=mysqli_fetch_assoc($posts)){ ?>
+                            <li><a href="#"><?php echo $postdata['post_tag']; ?></a></li>
+                        <?php } ?>
+                            <!-- <li><a href="#">#Apartment</a></li>
+                            <li><a href="#">#Girls Hostel</a></li>
+                            <li><a href="#">#Hostel</a></li>
+                            <li><a href="#">#Land</a></li>                            -->
                         </ul>
                     </div>
                 </div>

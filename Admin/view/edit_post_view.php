@@ -5,6 +5,9 @@
         if($_GET['status']='editpost'){
             $id=$_GET['id'];
             $postdata=$obj->get_post_info($id);
+            $postdata=mysqli_fetch_assoc($postdata);
+            // Fetch a result row as an associative array:
+            //convert each tupple from query to 1 associative array each.Here we have only 1 tuple.So we can use it to access info of 1 tuple.Otherwise we need to use it inside WHILE() loop condition
         }
     }
 

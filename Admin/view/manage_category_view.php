@@ -52,7 +52,7 @@
                     <td> <?php echo $cat['cat_name']; ?> </td>
                     <td> <?php echo $cat['cat_des']; ?> </td>
                     <td>
-                        <a href="#" class="btn btn-primary">Edit</a>
+                        <a href="edit_category.php?status=edtctg&&id=<?php echo $cat['cat_id']; ?>" class="btn btn-primary">Edit</a>
                         <a href="?status=delete&&delid=<?php echo $cat['cat_id']; ?>" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
