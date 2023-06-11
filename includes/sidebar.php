@@ -1,5 +1,5 @@
 <?php
-    $posts=$obj->display_distince_post_tag();
+    $posts=$obj->display_distinct_post_tag();
 ?>
 <div class="col-lg-4">
     <div class="sidebar">

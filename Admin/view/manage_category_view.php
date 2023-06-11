@@ -52,8 +52,16 @@
                     <td> <?php echo $cat['cat_name']; ?> </td>
                     <td> <?php echo $cat['cat_des']; ?> </td>
                     <td>
+                        <?php if($cat['ctg_author_id']==$_SESSION['adminID']){?>
                         <a href="edit_category.php?status=edtctg&&id=<?php echo $cat['cat_id']; ?>" class="btn btn-primary">Edit</a>
                         <a href="?status=delete&&delid=<?php echo $cat['cat_id']; ?>" class="btn btn-danger">Delete</a>
+                        <?php 
+                        }
+                        else{ ?>
+                        <a href="#>" class="btn btn-primary disabled">Edit</a>
+                        <a href="#" class="btn btn-danger disabled">Delete</a>
+                        <?php }
+                        ?>
                     </td>
                 </tr>
             <?php } ?>

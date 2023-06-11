@@ -87,13 +87,14 @@
             }
         }
 
-        public function display_category(){
+        public function display_category(){            
             $query="SELECT * FROM category ORDER BY cat_name";
             if(mysqli_query($this->conn,$query)){
                 $category=mysqli_query($this->conn,$query);
                 return $category;
             }
         }
+        
         public function display_category_byID($id){
             $query="SELECT * FROM category WHERE cat_id=$id";
             if(mysqli_query($this->conn,$query)){
@@ -132,7 +133,7 @@
             $post_img_tmp=$_FILES['post_img']['tmp_name'];
                         
             $post_category=$data['post_category'];
-            $post_author="Tanvir Anjom Siddique";
+            $post_author=$_SESSION['adminID'];//"Tanvir Anjom Siddique";
             $post_summery=$data['post_summery'];
             $post_tag=$data['post_tag'];
             $post_status=$data['post_status'];
@@ -150,15 +151,18 @@
 
         // display post for admin (for manage_post_view.php page)
         public function display_post(){
-            $query="SELECT * FROM post_with_ctg ORDER BY post_date DESC,post_id DESC";
+            $author_id=$_SESSION['adminID'];
+            $query="SELECT * FROM post_ctg_author WHERE author_id=$author_id  ORDER BY post_date DESC,post_id DESC";
+            
             if(mysqli_query($this->conn,$query)){
                 $posts=mysqli_query($this->conn,$query);
                 return $posts;
             }
         }
 
-        public function display_distince_post_tag(){
-            $query="SELECT DISTINCT post_tag FROM post_with_ctg ORDER BY post_tag";
+        public function display_distinct_post_tag(){
+            $query="SELECT DISTINCT post_tag FROM post_ctg_author ORDER BY post_tag";
+            // $query="SELECT DISTINCT post_tag FROM post_with_ctg ORDER BY post_tag";
             if(mysqli_query($this->conn,$query)){
                 $posts=mysqli_query($this->conn,$query);
                 return $posts;
@@ -166,7 +170,7 @@
         }
         // display post for public (for blog_posts.php file)
         public function display_post_public(){
-            $query="SELECT * FROM post_with_ctg WHERE post_status=1 ORDER BY post_date DESC,post_id DESC";
+            $query="SELECT * FROM post_ctg_author WHERE post_status=1 ORDER BY post_date DESC,post_id DESC";
             if(mysqli_query($this->conn,$query)){
                 $posts=mysqli_query($this->conn,$query);
                 return $posts;
@@ -174,7 +178,7 @@
         }
         // fileter blog post by category:display posts of a specifiec category only
         public function display_post_public_by_category($cat){
-            $query="SELECT * FROM post_with_ctg WHERE post_status=1 and cat_name='$cat' ORDER BY post_date DESC,post_id DESC";
+            $query="SELECT * FROM post_ctg_author WHERE post_status=1 and cat_name='$cat' ORDER BY post_date DESC,post_id DESC";
             if(mysqli_query($this->conn,$query)){
                 $posts=mysqli_query($this->conn,$query);
                 return $posts;
@@ -203,7 +207,7 @@
         }
 
         public function get_post_info($id){
-            $query="SELECT * FROM post_with_ctg WHERE post_id=$id";
+            $query="SELECT * FROM post_ctg_author WHERE post_id=$id";
             if(mysqli_query($this->conn,$query)){
                 // $post_info=mysqli_query($this->conn,$query);
                 // $post=mysqli_fetch_assoc($post_info);

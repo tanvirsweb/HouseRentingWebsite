@@ -72,8 +72,8 @@
         <div class="sb-sidenav-footer">            
             <div class="small">Logged in as:</div>
             <?php 
-            if(isset($admin_name)){ echo $admin_name; }
-            else{ echo "Tanvir Anjom Siddique"; } ?>
+            if(isset($_SESSION['admin_name'])){ echo $_SESSION['admin_name']; }     
+            ?>
         </div>
     </nav>
 </div>
