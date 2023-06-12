@@ -6,3 +6,10 @@ RUET,CSE_19_A
 ->import this file "blogproject.sql" of Blog folder to the database.
 3) Run project in browser.
 
+
+admins entered:
+
+admin@gmail.com, pass: 123
+adm@gmail.com, pass: 123
+
+In database password are stored in encrypted form ( md5(pass) ) in 'admin' table.
