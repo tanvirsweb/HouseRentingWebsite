@@ -6,6 +6,3 @@ RUET,CSE_19_A
 ->import this file "blogproject.sql" of Blog folder to the database.
 3) Run project in browser.
 
-I got some help from :
-Youtube: Darun IT
-google: StackOverflow,w3school etc.

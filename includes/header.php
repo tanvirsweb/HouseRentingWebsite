@@ -1,7 +1,7 @@
 <header class="">
     <nav class="navbar navbar-expand-lg">
     <div class="container">
-        <a class="navbar-brand" href="index.php"><h2>Renting Blog<em>.</em></h2></a>
+        <a class="navbar-brand" href="index.php"><h2>BetterHome<em>.</em></h2></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>

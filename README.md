@@ -1,2 +1,2 @@
 # Blog
- Create Blog using PHP, MySQL, CSS, Bootstrap (Darun It youtube tutorial)
+ Create House Renting website using PHP, MySQL,HTML, CSS, Bootstrap
