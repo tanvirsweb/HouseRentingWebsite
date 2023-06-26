@@ -13,3 +13,21 @@ admin@gmail.com, pass: 123
 adm@gmail.com, pass: 123
 
 In database password are stored in encrypted form ( md5(pass) ) in 'admin' table.
+
+
+database: house_renting
+table 		primary_key
+---------------------------
+posts		post_id
+user_info	user_id
+admin_info	admin_id
+category	cat_id
+city		city_id
+
+<!-- 
+CREATE VIEW post_user_view AS
+ SELECT post_id, post_title, post_content, post_img, post_date, rent_from, rent_amount, post_status, user_id, user_name, user_email, cat_name, cat_id, posts.city_id, city_name 
+ FROM posts JOIN user_info ON posts.post_author=user_info.user_id 
+ JOIN category ON posts.post_ctg=category.cat_id 
+ JOIN city ON posts.city_id=city.city_id;
+); -->

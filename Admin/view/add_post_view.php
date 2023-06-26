@@ -28,7 +28,7 @@
         </div>
         <div class="form-group">
             <label class="mb-1" for="post_category">Select Post Category</label>
-            <select name="post_category" class="form-control py-4" id="post_category" required>
+            <select name="post_category" class="form-control" id="post_category" required>
                 <?php while($category=mysqli_fetch_assoc($categoryName)){ ?>
                 <option value="<?php echo $category['cat_id']; ?>">
                     <?php echo $category['cat_name']; ?>
@@ -46,8 +46,8 @@
         </div>
         <div class="form-group">
             <label class="mb-1" for="post_status">Post Status</label>
-            <select name="post_status" class="form-control py-4" id="post_status" required>
-                <option value="1">Published</option>
+            <select name="post_status" class="form-control" id="post_status" required>
+                <option value="1" selected="selected">Published</option>
                 <option value="0">Unpublished</option>
             </select>
         </div>

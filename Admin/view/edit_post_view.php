@@ -33,8 +33,9 @@
         </div>
         <div class="form-group">
             <label for="change_post_status" class="mb-1">Post Status</label>
+            <!-- if you use padding in select: selected option will not be shown. -->
             <select name="change_post_status" id="change_post_status" class="form-control" required>
-                <option value="1">Published</option>
+                <option value="1" selected="selected">Published</option>
                 <option value="0">Unpublished</option>
             </select>
         </div>
