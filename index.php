@@ -27,7 +27,7 @@
 
     <!-- ***** Preloader Start ***** -->
    <?php
-        include_once("includes/preloader.php");
+        // include_once("includes/preloader.php");
    ?>    
     <!-- Header -->
     <?php
@@ -41,15 +41,24 @@
         include_once("includes/banner.php");
     ?>
     <!-- call to action  download ..-->
+
     <!-- <?php
         // include_once("includes/cta.php");
     ?> -->
+    <?php 
+      if(empty($_GET['status']) && empty($_GET['view'])){
+        include_once('includes/filter_search.php'); 
+      }
+    ?>
+    <br>
     <br>
     <hr>
 
+    
 
     <section class="blog-posts">
       <div class="container">
+        
         <div class="row">
             <!-- all blogpost -->
           <?php include_once("includes/blogpost.php"); ?>

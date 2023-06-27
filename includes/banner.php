@@ -17,9 +17,9 @@
                     </div>                    
                     <!-- <h4>Morbi dapibus condimentum</h4>                     -->
                     <ul class="post-info">
-                        <li><a href="#">Admin</a></li>
+                        <li><a href="#"><?php echo $postdata['user_name']; ?></a></li>
                         <li><a href="#"><?php echo $postdata['post_date']; ?></a></li>
-                        <li><a href="#"><?php echo $postdata['post_comment_count']; ?> Comments</a></li>
+                        <li><a href="#"><?php echo $postdata['rent_amount']; ?>/-</a></li>
                     </ul>
                     </div>
                 </div>

@@ -8,7 +8,7 @@
             $dbhost='localhost';
             $dbuser='root';
             $dbpass='';
-            $dbname='blogproject';
+            $dbname='house_renting';
 
             // make connection with databse
             $this->conn=mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
@@ -18,6 +18,80 @@
             }
             
         }
+        //-----------------------------------------
+        public function filterDateCity($DATA){            
+            // ----------For checking input date is clear/set: use EMPTY() ->instead of ISSET() for correct output
+            //rent , date , city:  1 1 1
+            if(!empty($DATA['min_rent']) && !empty($DATA['max_rent']) && !empty($DATA['from_date']) && !empty($DATA['to_date'])  &&$DATA['city_id']!='All')
+            {
+                $min_rent=$DATA['min_rent'];
+                $max_rent=$DATA['max_rent'];
+                $from_date = $DATA['from_date'];
+                $to_date = $DATA['to_date'];
+                $city_id= $DATA['city_id'];
+                $query = "SELECT * FROM post_user_view WHERE rent_from BETWEEN '$from_date' AND '$to_date' AND rent_amount BETWEEN $min_rent AND $max_rent AND city_id=$city_id";                
+            }
+            //rent, date: 1 1 0
+            elseif(!empty($DATA['min_rent']) && !empty($DATA['max_rent']) && !empty($DATA['from_date']) && !empty($DATA['to_date'])  &&$DATA['city_id']=='All')
+            {
+                $min_rent=$DATA['min_rent'];
+                $max_rent=$DATA['max_rent'];
+                $from_date = $DATA['from_date'];
+                $to_date = $DATA['to_date'];
+                $query = "SELECT * FROM post_user_view WHERE rent_from BETWEEN '$from_date' AND '$to_date' AND rent_amount BETWEEN $min_rent AND $max_rent";                
+            }
+            //rent,city: 1 0 1
+            elseif(!empty($DATA['min_rent']) && !empty($DATA['max_rent']) && (empty($DATA['from_date']) || empty($DATA['to_date']))  &&$DATA['city_id']!='All')
+            {
+                $min_rent=$DATA['min_rent'];
+                $max_rent=$DATA['max_rent'];                
+                $city_id= $DATA['city_id'];
+                $query = "SELECT * FROM post_user_view WHERE rent_amount BETWEEN $min_rent AND $max_rent AND city_id=$city_id";                
+            }
+            //rent: 1 0 0
+            elseif(!empty($DATA['min_rent']) && !empty($DATA['max_rent']) && (empty($DATA['from_date']) || empty($DATA['to_date']))  &&$DATA['city_id']=='All')
+            {
+                $min_rent=$DATA['min_rent'];
+                $max_rent=$DATA['max_rent'];    
+                $query = "SELECT * FROM post_user_view WHERE rent_amount BETWEEN $min_rent AND $max_rent";                
+            }
+             //date , city:0 1 1  
+             elseif( (empty($DATA['min_rent']) || empty($DATA['max_rent']) ) && !empty($DATA['from_date']) && !empty($DATA['to_date']) &&$DATA['city_id']!='All')
+             {
+                 $from_date = $DATA['from_date'];
+                 $to_date = $DATA['to_date'];
+                 $city_id=$DATA['city_id'];
+                 $query = "SELECT * FROM post_user_view WHERE  rent_from BETWEEN '$from_date' AND '$to_date' AND city_id=$city_id";                                
+             }
+            
+            // filter by:date : 0 1 0
+            elseif( (empty($DATA['min_rent']) || empty($DATA['max_rent']) ) && !empty($DATA['from_date']) && !empty($DATA['to_date']) &&$DATA['city_id']=='All')
+            {
+                $from_date = $DATA['from_date'];
+                $to_date = $DATA['to_date'];
+                $query = "SELECT * FROM post_user_view WHERE rent_from BETWEEN '$from_date' AND '$to_date' ";                
+            }
+           
+            // filter by: city: 0 0 1
+            elseif((empty($DATA['min_rent']) || empty($DATA['max_rent']) ) && (empty($DATA['from_date']) || empty($DATA['to_date']) ) && $DATA['city_id']!='All'){
+                $city_id=$DATA['city_id'];
+                $query = "SELECT * FROM post_user_view WHERE city_id=$city_id";                $_SESSION['msg']= "<h1>filter !=date & !=all</h1>";                
+            }
+            // 0 0 0 & other options
+            else{
+                $query = "SELECT * FROM post_user_view";                
+            }
+            $query_run = mysqli_query($this->conn, $query);
+            return $query_run;
+        }
+        //end of Filter function
+
+        public function getAllCity(){
+            $query = "SELECT * FROM city ORDER BY city_name";
+            $query_run = mysqli_query($this->conn, $query);
+            return $query_run;
+        }
+
         public function admin_login($data){
             $admin_email=$data['admin_email'];
             $admin_pass=md5($data['admin_pass']);

@@ -17,9 +17,9 @@
                         <h4><?php echo $postdata['post_title']; ?></h4>
                     </a>
                     <ul class="post-info">
-                    <li><a href="#"><?php echo $postdata['post_author']; ?></a></li>
-                    <li><a href="#"><?php echo $postdata['post_date']; ?></a></li>
-                    <li><a href="#"><?php echo $postdata['post_comment_count']; ?></a></li>
+                    <li><a href="#"><?php echo $postdata['user_name']; ?></a></li>
+                    <li><a href="#"><?php echo $postdata['rent_from']; ?></a></li>
+                    <li><a href="#"><?php echo $postdata['rent_amount']; ?>/-</a></li>
                     </ul>
                     <p>
                     <?php echo $postdata['post_content']; ?>
@@ -27,7 +27,7 @@
                     <div class="post-options">
                     <div class="row">
                         <div class="col-6">
-                        <?php echo $postdata['post_tag']; ?>
+                        <?php echo $postdata['city_name']; ?>
                         </div>
                         <div class="col-6">
                         <ul class="post-share">

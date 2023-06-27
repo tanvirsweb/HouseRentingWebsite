@@ -20,7 +20,18 @@ CREATE VIEW post_user_view AS
 
         public function filterDateCity($DATA){            
             // ----------For checking input date is clear/set: use EMPTY() ->instead of ISSET() for correct output
-            if(!empty($DATA['min_rent']) && !empty($DATA['max_rent']) && !empty($DATA['from_date']) && !empty($DATA['to_date'])  &&$DATA['city_id']=='All')
+            //rent , date , city:  1 1 1
+            if(!empty($DATA['min_rent']) && !empty($DATA['max_rent']) && !empty($DATA['from_date']) && !empty($DATA['to_date'])  &&$DATA['city_id']!='All')
+            {
+                $min_rent=$DATA['min_rent'];
+                $max_rent=$DATA['max_rent'];
+                $from_date = $DATA['from_date'];
+                $to_date = $DATA['to_date'];
+                $city_id= $DATA['city_id'];
+                $query = "SELECT * FROM post_user_view WHERE rent_from BETWEEN '$from_date' AND '$to_date' AND rent_amount BETWEEN $min_rent AND $max_rent AND city_id=$city_id";                
+            }
+            //rent, date: 1 1 0
+            elseif(!empty($DATA['min_rent']) && !empty($DATA['max_rent']) && !empty($DATA['from_date']) && !empty($DATA['to_date'])  &&$DATA['city_id']=='All')
             {
                 $min_rent=$DATA['min_rent'];
                 $max_rent=$DATA['max_rent'];
@@ -28,33 +39,44 @@ CREATE VIEW post_user_view AS
                 $to_date = $DATA['to_date'];
                 $query = "SELECT * FROM post_user_view WHERE rent_from BETWEEN '$from_date' AND '$to_date' AND rent_amount BETWEEN $min_rent AND $max_rent";                
             }
+            //rent,city: 1 0 1
+            elseif(!empty($DATA['min_rent']) && !empty($DATA['max_rent']) && (empty($DATA['from_date']) || empty($DATA['to_date']))  &&$DATA['city_id']!='All')
+            {
+                $min_rent=$DATA['min_rent'];
+                $max_rent=$DATA['max_rent'];                
+                $city_id= $DATA['city_id'];
+                $query = "SELECT * FROM post_user_view WHERE rent_amount BETWEEN $min_rent AND $max_rent AND city_id=$city_id";                
+            }
+            //rent: 1 0 0
             elseif(!empty($DATA['min_rent']) && !empty($DATA['max_rent']) && (empty($DATA['from_date']) || empty($DATA['to_date']))  &&$DATA['city_id']=='All')
             {
                 $min_rent=$DATA['min_rent'];
                 $max_rent=$DATA['max_rent'];    
                 $query = "SELECT * FROM post_user_view WHERE rent_amount BETWEEN $min_rent AND $max_rent";                
             }
+             //date , city:0 1 1  
+             elseif( (empty($DATA['min_rent']) || empty($DATA['max_rent']) ) && !empty($DATA['from_date']) && !empty($DATA['to_date']) &&$DATA['city_id']!='All')
+             {
+                 $from_date = $DATA['from_date'];
+                 $to_date = $DATA['to_date'];
+                 $city_id=$DATA['city_id'];
+                 $query = "SELECT * FROM post_user_view WHERE  rent_from BETWEEN '$from_date' AND '$to_date' AND city_id=$city_id";                                
+             }
             
-            // filter by: date range
-            elseif(!empty($DATA['from_date']) && !empty($DATA['to_date']) &&$DATA['city_id']=='All')
+            // filter by:date : 0 1 0
+            elseif( (empty($DATA['min_rent']) || empty($DATA['max_rent']) ) && !empty($DATA['from_date']) && !empty($DATA['to_date']) &&$DATA['city_id']=='All')
             {
                 $from_date = $DATA['from_date'];
                 $to_date = $DATA['to_date'];
                 $query = "SELECT * FROM post_user_view WHERE rent_from BETWEEN '$from_date' AND '$to_date' ";                
             }
-            // filter by: date range & city
-            elseif(!empty($DATA['from_date']) && !empty($DATA['to_date']) &&$DATA['city_id']!='All')
-            {
-                $from_date = $DATA['from_date'];
-                $to_date = $DATA['to_date'];
-                $city_id=$DATA['city_id'];
-                $query = "SELECT * FROM post_user_view WHERE  rent_from BETWEEN '$from_date' AND '$to_date' AND city_id=$city_id";                $_SESSION['msg']= "<h1>filter date & !=all</h1>";
-            }
-            // filter by: city
-            elseif( (empty($DATA['from_date']) || empty($DATA['to_date']) ) && $DATA['city_id']!='All'){
+           
+            // filter by: city: 0 0 1
+            elseif((empty($DATA['min_rent']) || empty($DATA['max_rent']) ) && (empty($DATA['from_date']) || empty($DATA['to_date']) ) && $DATA['city_id']!='All'){
                 $city_id=$DATA['city_id'];
                 $query = "SELECT * FROM post_user_view WHERE city_id=$city_id";                $_SESSION['msg']= "<h1>filter !=date & !=all</h1>";                
             }
+            // 0 0 0 & other options
             else{
                 $query = "SELECT * FROM post_user_view";                
             }
@@ -90,34 +112,34 @@ CREATE VIEW post_user_view AS
             <div class="col-md-12">
                 <div class="card mt-5">
                     <div class="card-header">
-                        <h4>Search By :</h4>
+                        <h4>Search By:</h4>
                     </div>
                     <div class="card-body">
                     
-                        <form action="" method="GET">
+                        <form action="" method="POST">
                             <div class="row">
                             <div class="col-md-2 col-6">
                                     <div class="form-group">
                                         <label>Min Rent</label>                                    
-                                        <input type="int" name="min_rent"  value="<?php if(isset($_GET['min_rent'])){ echo $_GET['min_rent']; } ?>"  class="form-control">
+                                        <input type="int" name="min_rent"  value="<?php if(!empty($_POST['min_rent']) && !empty($_POST['max_rent'])){ echo $_POST['min_rent']; } ?>"  class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-2 col-6">
                                     <div class="form-group">
                                         <label>Max Rent</label>                                        
-                                        <input type="int" name="max_rent" value="<?php if(isset($_GET['max_rent'])){ echo $_GET['max_rent']; } ?>"  class="form-control">
+                                        <input type="int" name="max_rent" value="<?php if(!empty($_POST['min_rent']) && !empty($_POST['max_rent'])){ echo $_POST['max_rent']; } ?>"  class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-2 col-6">
                                     <div class="form-group">
                                         <label>From Date</label>
-                                        <input type="date" name="from_date" value="<?php if(isset($_GET['from_date'])){ echo $_GET['from_date']; } ?>" class="form-control">                                        
+                                        <input type="date" name="from_date" value="<?php if(!empty($_POST['from_date']) && !empty($_POST['to_date'])){ echo $_POST['from_date']; } ?>" class="form-control">                                        
                                     </div>
                                 </div>
                                 <div class="col-md-2 col-6">
                                     <div class="form-group">
                                         <label>To Date</label>
-                                        <input type="date" name="to_date" value="<?php if(isset($_GET['to_date'])){ echo $_GET['to_date']; } ?>" class="form-control">
+                                        <input type="date" name="to_date" value="<?php if(!empty($_POST['from_date']) && !empty($_POST['to_date'])){ echo $_POST['to_date']; } ?>" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-2 col-6">
@@ -131,7 +153,7 @@ CREATE VIEW post_user_view AS
                                                 if(mysqli_num_rows($query_run) > 0)
                                                 {
                                                     foreach($query_run as $row){
-                                                    if($row['city_id']==$_GET['city_id']){?>
+                                                    if($row['city_id']==$_POST['city_id']){?>
                                                     <option selected="selected" value="<?php echo $row['city_id']; ?>"><?php echo $row['city_name']; ?></option>
                                             <?php 
                                                     }else{ ?>
@@ -167,13 +189,13 @@ CREATE VIEW post_user_view AS
                             
                             <?php 
                                 // $con = mysqli_connect("localhost","root","","house_renting");
-                                if(isset($_GET['from_date']) && isset($_GET['to_date']))
+                                if(isset($_POST['from_date']) && isset($_POST['to_date']))
                                 {
-                                    // $from_date = $_GET['from_date'];
-                                    // $to_date = $_GET['to_date'];
+                                    // $from_date = $_POST['from_date'];
+                                    // $to_date = $_POST['to_date'];
                                     // $query = "SELECT * FROM user_post_view WHERE rent_from BETWEEN '$from_date' AND '$to_date' ";
                                     // $query_run = mysqli_query($con, $query);   
-                                    $query_run=$obj->filterDateCity($_GET);
+                                    $query_run=$obj->filterDateCity($_POST);
                                     if(mysqli_num_rows($query_run) > 0)
                                     {
                                         foreach($query_run as $row)
@@ -204,7 +226,7 @@ CREATE VIEW post_user_view AS
         </div>
     </div>
 
-    <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script> -->
-</body>
+<!-- </body>
 </html>

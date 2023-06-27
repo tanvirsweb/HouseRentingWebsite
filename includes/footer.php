@@ -14,7 +14,7 @@
         <div class="copyright-text">
             <p>Copyright 2023 TanvirsWeb
                 
-                | Design: <a rel="nofollow" href="https://templatemo.com" target="_parent">Tanvir Anjom Siddique</a></p>
+                | Design: <a rel="nofollow" href="" target="_parent">Tanvir Anjom Siddique</a></p>
         </div>
         </div>
     </div>
