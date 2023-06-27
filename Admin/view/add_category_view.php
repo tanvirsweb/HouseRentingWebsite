@@ -5,8 +5,6 @@
     }
 ?>
 
-
-
 <div class="shadow m-5 p-5">
     <h2 class="text-center">Add Category Page</h2>
     <div class="container text-success bg-light text-center">
@@ -14,6 +12,7 @@
     </div>    
     
     <form action="" method="POST">
+        <input type="hidden" name="person_id" value="<?php echo $_SESSION['person_id']; ?>">
         <div class="form-group">
             <label class="mb-1" for="cat_name">Category Name</label>
             <input name="cat_name" class="form-control py-4" id="cat_name" type="text" required/>

@@ -64,7 +64,7 @@
                             <td>
                                 <img height="100px" src="../upload/<?php echo $postdata['post_img']; ?>" alt="">
                                 <br>
-                                <?php if($_SESSION['adminID']==$postdata['user_id']){?>
+                                <?php if($_SESSION['person_id']==$postdata['user_id']){?>
                                     <a href="edit_img.php?status=editimg&&id=<?php echo $postdata['post_id']; ?>&&editimg_name=<?php echo $postdata['post_img']; ?>">Change</a>
                                 <?php } ?>                                    
                             </td>
@@ -73,7 +73,7 @@
                             <td><?php echo $postdata['cat_name']; ?></td>
                             <td><?php echo $postdata['post_status']; ?></td>
                             <td>
-                                <?php if($_SESSION['adminID']==$postdata['user_id']){?>
+                                <?php if($_SESSION['person_id']==$postdata['user_id']){?>
                                     <a class="btn btn-primary m-1" href="edit_post.php?status=editpost&&id=<?php echo $postdata['post_id']; ?>">Edit</a>
                                     <a class="btn btn-danger m-1" href="?status=delpost&&id=<?php echo $postdata['post_id']; ?>&&deltimg_name=<?php echo $postdata['post_img']; ?>">Delete</a>
                                     <!-- reload to this same page.with parameters status,id,delimg_name -->

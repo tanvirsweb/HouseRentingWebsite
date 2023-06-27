@@ -17,7 +17,7 @@
             submitBtn.disabled = false;
         }
         else{                                
-            document.getElementById('rtxt').innerHTML="pass word did not matched !!";
+            document.getElementById('rtxt').innerHTML="password did not match !!";
             submitBtn.disabled = true;
         }
                     

@@ -45,7 +45,7 @@
                             <br>
                             <a href="edit_img.php?status=editimg&&id=<?php echo $postdata['post_id']; ?>&&editimg_name=<?php echo $postdata['post_img']; ?>">Change</a>
                         </td>
-                        <!-- <td><?php echo $postdata['author_name']; ?></td> -->
+                        <!-- <td><?php echo $postdata['user_name']; ?></td> -->
                         <td><?php echo $postdata['post_date']; ?></td>
                         <td><?php echo $postdata['cat_name']; ?></td>
                         <td><?php echo $postdata['post_status']; ?></td>

@@ -92,9 +92,39 @@
             return $query_run;
         }
 
+        public function user_login($data){
+            $email=$data['email'];
+            $pass=md5($data['pass']);
+
+            $query="SELECT * FROM user_info WHERE user_email='$email' && user_pass='$pass'";
+
+            // query succes?
+            if(mysqli_query($this->conn,$query)){
+               $user_tuple= mysqli_query($this->conn,$query);
+            
+               //there is such admin_emai & password ? / null
+               if($user_tuple){
+                // password & email matched-> go to dashboard.php page
+                    header('Location:dashboard.php');  
+
+                    // query returns user_tuple.Convert it in array using mysqli_fetch_assoc($user_tuple) function.
+                    // keep query data in an arry
+                    $user_data=mysqli_fetch_assoc($user_tuple);                    
+
+                    // before keeping any Information is $_SESSION named super global variable
+                    // we need to start session.Otherwise there will be no data in session.
+                    session_start();
+                    $_SESSION['person']='user';
+                    $_SESSION['person_id']=$user_data['user_id'];
+                    $_SESSION['person_name']=$user_data['user_name'];
+               }
+               
+            }
+        }
+
         public function admin_login($data){
-            $admin_email=$data['admin_email'];
-            $admin_pass=md5($data['admin_pass']);
+            $admin_email=$data['email'];
+            $admin_pass=md5($data['pass']);
 
             $query="SELECT * FROM admin_info WHERE admin_email='$admin_email' && admin_pass='$admin_pass'";
 
@@ -114,26 +144,27 @@
                     // before keeping any Information is $_SESSION named super global variable
                     // we need to start session.Otherwise there will be no data in session.
                     session_start();
-                    $_SESSION['adminID']=$admin_data['id'];
-                    $_SESSION['admin_name']=$admin_data['admin_name'];
+                    $_SESSION['person']='admin';
+                    $_SESSION['person_id']=$admin_data['admin_id'];
+                    $_SESSION['person_name']=$admin_data['admin_name'];
                }
                
             }
         }
 
-        public function admin_signup($data){
-            $admin_name=$data['admin_name'];
-            $admin_email=$data['admin_email'];
-            $admin_pass=md5($data['admin_pass']);
+        public function user_signup($data){
+            $user_name=$data['user_name'];
+            $user_email=$data['user_email'];
+            $user_pass=md5($data['user_pass']);
 
-            $query="SELECT * FROM admin_info where admin_email='$admin_email'";            
+            $query="SELECT * FROM user_info where user_email='$user_email'";            
             $q=mysqli_query($this->conn,$query);
             
             if(mysqli_num_rows($q)>0){
                 return "This email is already used.Try with another one...";
             }                                    
             else{                
-                $query="INSERT INTO admin_info ( admin_email, admin_name, admin_pass) VALUES ('$admin_email', '$admin_name', '$admin_pass')";
+                $query="INSERT INTO user_info ( user_email, user_name, user_pass) VALUES ('$user_email', '$user_name', '$user_pass')";
                 if(mysqli_query($this->conn,$query)){
                     return "Account Created Successfully !!";
                 }
@@ -142,17 +173,20 @@
         }
         
 
-        public function adminLogout(){
-            unset($_SESSION['adminID']);
-            unset($_SESSION['admin_name']);
+        public function logout(){ 
+            unset($_SESSION['person']);           
+            unset($_SESSION['person_id']);
+            unset($_SESSION['person_name']);
+
             header("location:index.php");
         }
 
         public function add_category($data){
+            $person_id=$data['person_id'];
             $cat_name=$data['cat_name'];
             $cat_des=$data['cat_des'];
 
-            $query="INSERT INTO category(cat_name,cat_des) VALUE('$cat_name','$cat_des')";
+            $query="INSERT INTO category(cat_name,cat_des,ctg_author_id) VALUE('$cat_name','$cat_des',$person_id)";
             if(mysqli_query($this->conn,$query)){
                 return "Category Added Successfully!";
             }
@@ -207,7 +241,7 @@
             $post_img_tmp=$_FILES['post_img']['tmp_name'];
                         
             $post_category=$data['post_category'];
-            $post_author=$_SESSION['adminID'];//"Tanvir Anjom Siddique";
+            $post_author=$_SESSION['admin_id'];//"Tanvir Anjom Siddique";
             $post_summery=$data['post_summery'];
             $post_tag=$data['post_tag'];
             $post_status=$data['post_status'];
@@ -224,9 +258,10 @@
         }
 
         // display post for admin (for manage_post_view.php page)
-        public function display_post(){
-            $author_id=$_SESSION['adminID'];
-            $query="SELECT * FROM post_ctg_author WHERE author_id=$author_id  ORDER BY post_date DESC,post_id DESC";
+        public function display_post(){ 
+            // for both user & admin login there is:$_SESSION['person_id']-> user_id/admin_id respectively           
+            $user_id=$_SESSION['person_id']; 
+            $query="SELECT * FROM post_user_view WHERE user_id=$user_id ORDER BY post_date DESC,post_id DESC";
             
             if(mysqli_query($this->conn,$query)){
                 $posts=mysqli_query($this->conn,$query);
@@ -234,17 +269,10 @@
             }
         }
 
-        public function display_distinct_post_tag(){
-            $query="SELECT DISTINCT post_tag FROM post_ctg_author ORDER BY post_tag";
-            // $query="SELECT DISTINCT post_tag FROM post_with_ctg ORDER BY post_tag";
-            if(mysqli_query($this->conn,$query)){
-                $posts=mysqli_query($this->conn,$query);
-                return $posts;
-            }
-        }
+        
         // display post for public (for blog_posts.php file)
         public function display_post_public(){
-            $query="SELECT * FROM post_ctg_author WHERE post_status=1 ORDER BY post_date DESC,post_id DESC";
+            $query="SELECT * FROM post_user_view WHERE post_status=1 ORDER BY post_date DESC,post_id DESC";
             if(mysqli_query($this->conn,$query)){
                 $posts=mysqli_query($this->conn,$query);
                 return $posts;
@@ -252,7 +280,14 @@
         }
         // fileter blog post by category:display posts of a specifiec category only
         public function display_post_public_by_category($cat){
-            $query="SELECT * FROM post_ctg_author WHERE post_status=1 and cat_name='$cat' ORDER BY post_date DESC,post_id DESC";
+            $query="SELECT * FROM post_user_view WHERE post_status=1 and cat_name='$cat' ORDER BY post_date DESC,post_id DESC";
+            if(mysqli_query($this->conn,$query)){
+                $posts=mysqli_query($this->conn,$query);
+                return $posts;
+            }
+        }
+        public function display_post_public_by_city($city_id){
+            $query="SELECT * FROM post_user_view WHERE post_status=1 and city_id='$city_id' ORDER BY post_date DESC,post_id DESC";
             if(mysqli_query($this->conn,$query)){
                 $posts=mysqli_query($this->conn,$query);
                 return $posts;
@@ -281,7 +316,7 @@
         }
 
         public function get_post_info($id){
-            $query="SELECT * FROM post_ctg_author WHERE post_id=$id";
+            $query="SELECT * FROM post_user_view WHERE post_id=$id";
             if(mysqli_query($this->conn,$query)){
                 // $post_info=mysqli_query($this->conn,$query);
                 // $post=mysqli_fetch_assoc($post_info);

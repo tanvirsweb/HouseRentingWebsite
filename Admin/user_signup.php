@@ -2,15 +2,15 @@
     include_once("class/function.php");
     $obj=new adminBlog();
 
-    if(isset( $_POST['admin_signup'] ) ){         
-        $rmsg=$obj->admin_signup($_POST);        
+    if(isset( $_POST['user_signup'] ) ){         
+        $rmsg=$obj->user_signup($_POST);        
     }    
 
     // start session to access data in $_SESSION passed from function.php file which is included here.
     session_start();        
     // A variable is considered empty if it does not exist or if its value equals false.
     //  empty() does not generate a warning if the variable does not exist.
-    if( !empty($_SESSION['adminID']) ){        
+    if( !empty($_SESSION['person_id']) ){        
         //after loged in >if someone wants to stay in login(index.php) page 
         //it won't allow you to go to index.php page again
         // redirect to dashboard.php page after coming to this login(index.php) page
@@ -34,21 +34,21 @@
                                         <form action="" method="POST">
                                             
                                             <div class="form-group">
-                                                <label class="small mb-1" for="admin_name">Name</label>
-                                                <input name="admin_name" class="form-control py-4" id="admin_name" type="text" placeholder="Enter your name" />
+                                                <label class="small mb-1" for="user_name">Name</label>
+                                                <input name="user_name" class="form-control py-4" id="user_name" type="text" placeholder="Enter your name" />
                                             </div>
                                             
                                             <div class="form-group">
                                                 <label class="small mb-1" for="inputEmailAddress">Email</label>
-                                                <input name="admin_email" class="form-control py-4" id="inputEmailAddress" type="email" placeholder="Enter email address" />
+                                                <input name="user_email" class="form-control py-4" id="inputEmailAddress" type="email" placeholder="Enter email address" />
                                             </div>
                                             <div class="form-group">
                                                 <label class="small mb-1" for="inputPassword">Password</label>
-                                                <input name="admin_pass" class="form-control py-4" id="inputPassword" type="password" placeholder="Enter password" />
+                                                <input name="user_pass" class="form-control py-4" id="inputPassword" type="password" placeholder="Enter password" />
                                             </div>
                                             <div class="form-group">
                                                 <label class="small mb-1" for="rinputPassword">Confirm Password</label>
-                                                <input name="radmin_pass" class="form-control py-4" id="rinputPassword" type="password" placeholder="Enter password" />
+                                                <input name="ruser_pass" class="form-control py-4" id="rinputPassword" type="password" placeholder="Enter password" />
                                                 <div id="rtxt"></div>
                                             </div>
                                             <!-- <div class="form-group">
@@ -58,7 +58,7 @@
                                                 </div>
                                             </div> -->
                                             <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <input type="submit" value="Sign Up" name="admin_signup" class="btn btn-primary" id="submit">                                                
+                                                <input type="submit" value="Sign Up" name="user_signup" class="btn btn-primary" id="submit">                                                
                                             </div>
                                         </form>
 
@@ -81,7 +81,7 @@
         </div>
        <?php include_once("includes/script.php");?>
 
-       <?php include("includes/admin_signup_password_match.php"); ?>
+       <?php include("includes/user_signup_password_match.php"); ?>
     <!-----------------Match Password-------------->
     <!-- <script>        
         const passwordReInput = document.getElementById('rinputPassword');

@@ -8,26 +8,45 @@ RUET,CSE_19_A
 
 
 admins entered:
+admin@gmail.com / adm@gmail.com / ab3456cd@gmail.com / abc@gmail.com, 
+pass: 123
 
-admin@gmail.com, pass: 123
-adm@gmail.com, pass: 123
+( In database password are stored in encrypted form ( md5(pass) ) in 'admin' table. )
 
-In database password are stored in encrypted form ( md5(pass) ) in 'admin' table.
-
+## After import set those keys as primary key.Otherwise those tuples (rows) can't be modified.
 
 database: house_renting
-table 		primary_key
----------------------------
+table 		primary_key (ai= auto increment)
+--------------------------------------------
 posts		post_id
 user_info	user_id
 admin_info	admin_id
 category	cat_id
 city		city_id
 
+
+----------------------------Difficulties while I was making project-----------------------------
+###
+Query error:
+#1833 - Cannot change column 'cat_id': used in a foreign key constraint 'posts_ibfk_2' of table 'house_renting.posts'
+SOL:
+-----
+go to sql 
+> ALTER TABLE `category` CHANGE `cat_id` `cat_id` INT(255) NOT NULL AUTO_INCREMENT;
+> in below uncheck : Enable foreign key checks >go
+
+### 
+After import
+-------------
+1. Set those given keys as primary key.Otherwise those tuples (rows) can't be modified. ( as previous primary keys may no longer be primary key. )
+2. delete views.And recreate view.
 <!-- 
+DROP VIEW post_user_view; (If it's treated as view)
+DROP TABLE post_user_view; (If it's treated as table)
+
 CREATE VIEW post_user_view AS
  SELECT post_id, post_title, post_content, post_img, post_date, rent_from, rent_amount, post_status, user_id, user_name, user_email, cat_name, cat_id, posts.city_id, city_name 
  FROM posts JOIN user_info ON posts.post_author=user_info.user_id 
  JOIN category ON posts.post_ctg=category.cat_id 
  JOIN city ON posts.city_id=city.city_id;
-); -->
+-->

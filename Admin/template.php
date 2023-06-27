@@ -5,26 +5,22 @@
     // start session to access all $_SESSION data passed from function.php file.
     session_start();
     // page where we want to access session data we need to session_start() there.    
-    if( empty($_SESSION['adminID']) ){
+    if( empty($_SESSION['person_id']) ){
         // if someone did not log in:adminID don't exist/false: then don't let them access this page.
         //redirect them to login(index.php) page
-        header("location:index.php");
-        $admin_name=$_SESSION['admin_name'];
-
+        header("location:index.php");      
     }
 
-    if(isset($_GET['adminlogout'])){
-        if($_GET['adminlogout']=='logout'){
-            $obj->adminLogout();
+    if(isset($_GET['logout'])){
+        if($_GET['logout']=='logout'){
+            $obj->logout();
         }
     }
-
-    if($view=="manage_category"){
-        // include("view/manage_category_view.php");
-        header("Refresh:30;");
-        //reresh page after every 30 seconds                        
-        // header("Refresh:30;url=manage_category.php");                            
-    }
+    
+    // include("view/manage_category_view.php");
+    // header("Refresh:30;");
+    //reresh page after every 30 seconds                        
+    // header("Refresh:30;url=manage_category.php");                            
 ?>
 
 <?php include_once("includes/head.php");?>
@@ -60,7 +56,6 @@
                         elseif($view=="edit_category"){
                             include("view/edit_category_view.php");
                         }
-
                     }
                 ?>
                 <?php include_once("includes/footer.php"); ?>

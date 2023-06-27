@@ -71,8 +71,8 @@
         </div>
         <div class="sb-sidenav-footer">            
             <div class="small">Logged in as:</div>
-            <?php 
-            if(isset($_SESSION['admin_name'])){ echo $_SESSION['admin_name']; }     
+            <?php             
+                if(isset($_SESSION['person_name'])){ echo $_SESSION['person_name']; }     
             ?>
         </div>
     </nav>
