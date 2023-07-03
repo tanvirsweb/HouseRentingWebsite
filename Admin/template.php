@@ -62,6 +62,9 @@
                         elseif($view=="manage_city"){
                             include("view/manage_city_view.php");
                         }
+                        elseif($view=="edit_city"){
+                            include("view/edit_city_view.php");
+                        }
                     }
                 ?>
                 <?php include_once("includes/footer.php"); ?>

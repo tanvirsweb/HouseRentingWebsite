@@ -1,25 +1,19 @@
 <?php
     if(isset($_GET['status'])){
-        if($_GET['status']=='delete'){
-            $delid=$_GET['delid'];
-            $del_msg=$obj->delete_category_byID($delid);
-            //set a header to instruct the browser to call the page every 30 sec
-            // header("Refresh: 30;");
-                        
-            // header("Refresh:0;url=manage_category.php");
-            // error occur if you try to access header() from this file
-
-            // it will automatically refresh in 0 seconds, you can change time in refresh
-            // hence after deleting a tuple we can see the updated page
-            if(!headers_sent()){//if header is not send redirect using php function header();else use JS
-                header('Location:manage_category.php');
-            }
-            else{
-                echo '<script type="text/javascript">window.location.href="manage_category.php";</script>';
-            }
-
-//    
+        if($_GET['status']=='delcity'){                        
+            $msg=$obj->delete_city($_GET['id'],1);                        
         }
+        elseif($_GET['status']=='delcityreq'){                        
+            $msg=$obj->delete_city($_GET['id'],0);                        
+        }
+        elseif($_GET['status']=='apvcity'){
+            $msg=$obj->approve_city((int)$_GET['id']);
+        }
+        //after delete/approve reload page
+        if(!headers_sent())
+                header('Location:manage_city.php');            
+        else
+            echo '<script type="text/javascript">window.location.href="manage_city.php";</script>';
     }
 ?>
 
@@ -52,8 +46,8 @@
                     <td> <?php echo $city['post_code']; ?> </td>  
                     <?php if($_SESSION['person']=='admin'){ ?>
                     <td>
-                        <a href="edit_cityegory.php?status=edtcity&&id=<?php echo $city['city_id']; ?>" class="btn btn-primary m-1">Edit</a>
-                        <a href="?status=delete&&delid=<?php echo $city['city_id']; ?>" class="btn btn-danger m-1">Delete</a>                    
+                        <a href="edit_city.php?status=edtcity&&id=<?php echo $city['city_id']; ?>" class="btn btn-primary m-1">Edit</a>
+                        <a href="?status=delcity&&id=<?php echo $city['city_id']; ?>" class="btn btn-danger m-1">Delete</a>                    
                     </td>
                     <?php } ?>                                      
                 </tr>
@@ -84,10 +78,10 @@
                     <td> <?php echo $city['post_code']; ?> </td>    
                     <td> 
                     <?php if($_SESSION['person']=='admin'){ ?>  
-                        <a href="?status=aprcity&id=<?php echo $city['city_id']; ?>" class="btn btn-success m-1">Approve</a>                     
+                        <a href="?status=apvcity&id=<?php echo $city['city_id']; ?>" class="btn btn-success m-1">Approve</a>                     
                     <?php } ?>
-                        <a href="edit_cityegory.php?status=edtcityreq&&id=<?php echo $city['city_id']; ?>" class="btn btn-primary m-1">Edit</a>
-                        <a href="?status=delete&&delreqid=<?php echo $city['city_id']; ?>" class="btn btn-danger m-1">Delete</a>                    
+                        <a href="edit_city.php?status=edtcityreq&&id=<?php echo $city['city_id']; ?>" class="btn btn-primary m-1">Edit</a>
+                        <a href="?status=delcityreq&&id=<?php echo $city['city_id']; ?>" class="btn btn-danger m-1">Delete</a>                    
                     </td>                                    
                 </tr>
             <?php } ?>

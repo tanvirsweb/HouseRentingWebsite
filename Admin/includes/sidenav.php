@@ -85,10 +85,11 @@
             </div>
         </div>
         <div class="sb-sidenav-footer">            
-            <div class="small">Logged in as:</div>
+            <div class="small">Logged in as:
             <?php             
-                if(isset($_SESSION['person_name'])){ echo $_SESSION['person_name']; }     
+                echo '('. $_SESSION['person'] .')<br>'.  $_SESSION['person_name']; 
             ?>
+            </div>
         </div>
     </nav>
 </div>

@@ -206,6 +206,15 @@
                 return "Failed to Add City!!";
             }
         }
+
+        public function delete_city($city_id,$approved){
+            if($approved==1)
+                $query="DELETE FROM city WHERE city_id=$city_id";
+            else
+                $query="DELETE FROM city_req WHERE city_id=$city_id";
+            if(mysqli_query($this->conn,$query))
+                return "City deleted Successfully!!";
+        }
         public function approve_city($cityreq_id){  
             $query="SELECT* FROM city_req WHERE city_id=$cityreq_id";
             if(mysqli_query($this->conn,$query)){
@@ -226,6 +235,19 @@
                 return "Failed to Add City!!";
             }
         }
+        public function update_city($data){        
+            $city_id=$data['city_id'];
+            $city_name=$data['city_name'];
+            $post_code=$data['post_code'];
+            
+            if($data['approved']==1)
+                $query="UPDATE city SET city_name='$city_name',post_code=$post_code WHERE city_id=$city_id ";
+            else
+                $query="UPDATE city_req SET city_name='$city_name',post_code=$post_code WHERE city_id=$city_id ";
+            if(mysqli_query($this->conn,$query)){
+                return "City Updated Successfully!!";
+            }
+        }               
 
         public function getAllCity(){
             $query = "SELECT * FROM city ORDER BY city_name";//get all Approved city
@@ -241,7 +263,16 @@
             $query_run = mysqli_query($this->conn, $query);
             return $query_run;
         }
-        
+        public function get_City_byID($id,$approved){
+            if($approved==1)
+                $query="SELECT * FROM city WHERE city_id=$id";
+            else
+                $query="SELECT * FROM city_req WHERE city_id=$id";
+            if(mysqli_query($this->conn,$query)){
+                $city=mysqli_query($this->conn,$query);
+                return $city;
+            }
+        }
 
         public function display_category(){            
             $query="SELECT * FROM category ORDER BY cat_name";

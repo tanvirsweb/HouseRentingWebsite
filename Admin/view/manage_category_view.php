@@ -26,7 +26,6 @@
     }
 ?>
 
-<?php if($_SESSION['person']=='user'){ ?>
 <div class="shadow m-5 p-5">
     <h2 class="text-center mb-3">Manage Category</h2>
     <h4 class="text-center text-danger mb-3">
@@ -68,4 +67,3 @@
         </tbody>
     </table>
 </div>
-<?php } ?>
