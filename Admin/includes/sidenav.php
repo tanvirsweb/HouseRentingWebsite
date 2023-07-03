@@ -49,6 +49,21 @@
                         </div>
                     </li>
                 </ul>
+                <ul class="list-unstyled">
+                    <li class="mb-1 ms-2">
+                        <div class="btn
+                        text-white
+                         btn-toggle align-items-center collapsed" data-bs-toggle="collapse" data-bs-target="#city-collapse" aria-expanded="true">
+                         City
+                        </div>
+                        <div class="collapse" id="city-collapse">
+                        <ul class="list-unstyled btn-toggle-nav fw-normal  ms-2 pb-1 small">
+                            <li><a class="nav-link" href="add_city.php">Add City</a></li>
+                            <li><a class="nav-link" href="manage_city.php">Manage City</a></li>                            
+                        </ul>
+                        </div>
+                    </li>
+                </ul>
              
                 <ul class="list-unstyled">
                     <li class="mb-1 ms-2">

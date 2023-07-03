@@ -26,9 +26,9 @@
     }
 ?>
 
-
-<div class="container">
-    <h2 class="text-center mb-3">Manage Category Page</h2>
+<?php if($_SESSION['person']=='user'){ ?>
+<div class="shadow m-5 p-5">
+    <h2 class="text-center mb-3">Manage Category</h2>
     <h4 class="text-center text-danger mb-3">
         <?php if(isset($del_msg)){echo $del_msg;} ?>
     </h4>
@@ -53,13 +53,13 @@
                     <td> <?php echo $cat['cat_des']; ?> </td>
                     <td>
                         <?php if($cat['ctg_author_id']==$_SESSION['person_id']){?>
-                        <a href="edit_category.php?status=edtctg&&id=<?php echo $cat['cat_id']; ?>" class="btn btn-primary">Edit</a>
-                        <a href="?status=delete&&delid=<?php echo $cat['cat_id']; ?>" class="btn btn-danger">Delete</a>
+                        <a href="edit_category.php?status=edtctg&&id=<?php echo $cat['cat_id']; ?>" class="btn btn-primary m-1">Edit</a>
+                        <a href="?status=delete&&delid=<?php echo $cat['cat_id']; ?>" class="btn btn-danger m-1">Delete</a>
                         <?php 
                         }
                         else{ ?>
-                        <a href="#>" class="btn btn-primary disabled">Edit</a>
-                        <a href="#" class="btn btn-danger disabled">Delete</a>
+                        <a href="#>" class="btn btn-primary disabled m-1">Edit</a>
+                        <a href="#" class="btn btn-danger disabled m-1">Delete</a>
                         <?php }
                         ?>
                     </td>
@@ -68,3 +68,4 @@
         </tbody>
     </table>
 </div>
+<?php } ?>

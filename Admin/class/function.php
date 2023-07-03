@@ -85,12 +85,7 @@
             return $query_run;
         }
         //end of Filter function
-
-        public function getAllCity(){
-            $query = "SELECT * FROM city ORDER BY city_name";
-            $query_run = mysqli_query($this->conn, $query);
-            return $query_run;
-        }
+        
 
         public function user_login($data){
             $email=$data['email'];
@@ -185,7 +180,7 @@
             $person_id=$data['person_id'];
             $cat_name=$data['cat_name'];
             $cat_des=$data['cat_des'];
-
+            //cat_id must be set AI (primary key & auto increment ) -> otherwise for 1st entry id=0 for other entry also id=0 will be tried...copy primary key
             $query="INSERT INTO category(cat_name,cat_des,ctg_author_id) VALUE('$cat_name','$cat_des',$person_id)";
             if(mysqli_query($this->conn,$query)){
                 return "Category Added Successfully!";
@@ -194,6 +189,59 @@
                 return "Failed to Add Category!";
             }
         }
+        public function add_city($data){            
+            $city_name=$data['city_name'];    
+            $post_code=$data['post_code'];
+            $user_id=$_SESSION['person_id'];
+
+            if($_SESSION['person']=='admin')
+                $query="INSERT INTO city(city_name,post_code) VALUE('$city_name',$post_code)";
+            else
+                $query="INSERT INTO city_req(city_name,post_code,user_id) VALUE('$city_name',$post_code,$user_id)";
+
+            if(mysqli_query($this->conn,$query)){
+                return "City Added Successfully!!";
+            }
+            else{
+                return "Failed to Add City!!";
+            }
+        }
+        public function approve_city($cityreq_id){  
+            $query="SELECT* FROM city_req WHERE city_id=$cityreq_id";
+            if(mysqli_query($this->conn,$query)){
+                $data=mysqli_query($this->conn,$query);
+                $data=mysqli_fetch_assoc($data);
+            }          
+            $city_name=$data['city_name'];    
+            $post_code=$data['post_code'];            
+            
+            $query="INSERT INTO city(city_name,post_code) VALUE('$city_name',$post_code)";            
+
+            if(mysqli_query($this->conn,$query)){
+                $query="DELETE FROM city_req WHERE city_id=$cityreq_id";
+                if(mysqli_query($this->conn,$query))
+                    return "City Approved Successfully!!";
+            }
+            else{
+                return "Failed to Add City!!";
+            }
+        }
+
+        public function getAllCity(){
+            $query = "SELECT * FROM city ORDER BY city_name";//get all Approved city
+            $query_run = mysqli_query($this->conn, $query);
+            return $query_run;
+        }
+        public function getAllCityReq(){
+            $user_id=$_SESSION['person_id'];
+            if($_SESSION['person']=='admin')
+                $query = "SELECT * FROM city_req ORDER BY city_name";//show all city_req if admin
+            else
+                $query = "SELECT * FROM city_req WHERE user_id=$user_id ORDER BY city_name";//show city_req if this person requested it.
+            $query_run = mysqli_query($this->conn, $query);
+            return $query_run;
+        }
+        
 
         public function display_category(){            
             $query="SELECT * FROM category ORDER BY cat_name";
@@ -241,13 +289,16 @@
             $post_img_tmp=$_FILES['post_img']['tmp_name'];
                         
             $post_category=$data['post_category'];
-            $post_author=$_SESSION['admin_id'];//"Tanvir Anjom Siddique";
-            $post_summery=$data['post_summery'];
-            $post_tag=$data['post_tag'];
+            $post_author=$_SESSION['person_id'];//"Tanvir Anjom Siddique";
+            // $post_summery=$data['post_summery'];
+            // $post_tag=$data['post_tag'];
+            $rent_from=$data['rent_from'];            
+            $rent_amount=$data['rent_amount'];            
             $post_status=$data['post_status'];
+            $city_id=$data['city'];
             // it's tarint->0/1
 
-            $query="INSERT INTO posts(post_title,post_content,post_img,post_ctg,post_author,post_date,post_comment_count,post_summery,post_tag,post_status) VALUES('$post_title','$post_content','$post_img',$post_category,'$post_author',now(),3,'$post_summery','$post_tag',$post_status)";
+            $query="INSERT INTO posts(post_title, post_content, post_img, post_ctg, post_author, post_date, rent_from, rent_amount, city_id, post_status) VALUES('$post_title', '$post_content', '$post_img', $post_category, '$post_author', now(), '$rent_from', $rent_amount, $city_id, $post_status)";
 
             if(mysqli_query($this->conn,$query)){
                 // come out of folder where function.php file is included --> now in root folder-> goto upload folder & upload image as imagename: $post_img
@@ -341,18 +392,28 @@
             }
         }
 
-        public function update_post($data){
-            $post_title=$data['change_title'];
-            $post_content=$data['change_content'];
+        public function edit_post($data){
             $post_id=$data['edit_post_id'];
-            $post_status=$data['change_post_status'];
 
-            $query="UPDATE posts SET post_title='$post_title',post_content='$post_content',post_status=$post_status WHERE post_id=$post_id ";
-            if(mysqli_query($this->conn,$query)){
+            $post_title=$data['post_title'];
+            $post_content=$data['post_content'];                                            
+            $post_category=$data['post_category'];
+            $rent_from=$data['rent_from'];            
+            $rent_amount=$data['rent_amount'];            
+            $post_status=$data['post_status'];
+            // it's tarint->0/1
+            $city_id=$data['city'];
+            $query="UPDATE posts SET post_title='$post_title', post_content='$post_content', post_ctg= $post_category, rent_from='$rent_from', rent_amount=$rent_amount, city_id= $city_id, post_status=$post_status WHERE post_id=$post_id";
+
+            if(mysqli_query($this->conn,$query)){                
                 return "Post Updated Successfully!!";
+            }
+            else{
+                return "Failed to Update Post!!";
             }
         }
 
     }
+    // end class
 
 ?>

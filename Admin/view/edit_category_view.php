@@ -14,7 +14,7 @@
 
 
 <div class="shadow m-5 p-5">
-    <h2 class="text-center">Update Category Page</h2>
+    <h2 class="text-center">Update Category</h2>
     <div class="container text-success bg-light text-center">
         <?php if(isset($msg)){echo $msg;} ?>
     </div>    
