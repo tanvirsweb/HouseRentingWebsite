@@ -7,7 +7,7 @@
         <div class="owl-banner owl-carousel">
         <?php while($postdata=mysqli_fetch_assoc($posts_banner)){ ?>
             <div class="item">
-                <img src="upload/<?php echo $postdata['post_img']; ?>" alt="">
+                <img src="upload/<?php echo $postdata['post_img']; ?>" alt="" style="height:60vh">
                 <div class="item-content">
                     <div class="main-content">
                     <div class="meta-category">

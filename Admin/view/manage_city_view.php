@@ -40,7 +40,9 @@
         To get each attribute of each tuple in an array use mysqli_fetch_assoc($catdata) -->
             <?php 
             $allcity=$obj->getAllCity();
-            while($city=mysqli_fetch_assoc($allcity)){ ?>
+            // while($city=mysqli_fetch_assoc($allcity)){ 
+                foreach($allcity as $city){                
+                ?>
                 <tr>
                     <td> <?php echo $city['city_name']; ?> </td>
                     <td> <?php echo $city['post_code']; ?> </td>  
@@ -51,7 +53,7 @@
                     </td>
                     <?php } ?>                                      
                 </tr>
-            <?php } ?>
+            <?php } ?>            
         </tbody>
     </table>
 </div>
@@ -72,7 +74,11 @@
         To get each attribute of each tuple in an array use mysqli_fetch_assoc($catdata) -->
             <?php 
             $allcity=$obj->getAllCityReq();
-            while($city=mysqli_fetch_assoc($allcity)){ ?>
+            // while($city=mysqli_fetch_assoc($allcity)){ 
+            //when mysqli_fetch_assoc() is called $allcity is changed...after while loop it will be null...one time use
+            //when foreach is used array $alllcity is not changed.So we can use this array multiple times
+            foreach($allcity as $city){   
+               ?>
                 <tr>
                     <td> <?php echo $city['city_name']; ?> </td>
                     <td> <?php echo $city['post_code']; ?> </td>    

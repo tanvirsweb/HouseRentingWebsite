@@ -3,12 +3,18 @@
         // class object is already created inside template.php file whree this file is included.
         $msg=$obj->update_category($_POST);
     }
+
     if( isset($_GET['status']) && isset($_GET['id']) ){
-        if($_GET['status']=='edtctg'){            
-            $ctgdata=mysqli_fetch_assoc( $obj->display_category_byID($_GET['id']) );
-            //convert each tupple from query to an associative array each.Here we have only 1 tuple.So we don't need to use it inside while loop condition
+        if($_GET['status']=='edtctg'){
+            $approved=1;//get category from table category   
         }
+        else{//edtctgreq
+            $approved=0;//get category from category_req       
+        }
+        $ctgdata=mysqli_fetch_assoc( $obj->get_category_byID($_GET['id'],$approved) );
+            //convert each tupple from query to an associative array each.Here we have only 1 tuple.So we don't need to use it inside while loop condition
     }
+    
 ?>
 
 
@@ -21,6 +27,8 @@
     
     <form action="" method="POST">
         <input type="hidden" name="cat_id" value="<?php if(isset($_GET['id'])){ echo $_GET['id']; } ?>">
+        <input type="hidden" name="approved" value="<?php echo $approved ?>">
+        <!-- approved=1-> update table 'category' , =0 -> update table 'category_req' -->
 
         <div class="form-group">
             <label class="mb-1" for="cat_name" >Category Name</label>

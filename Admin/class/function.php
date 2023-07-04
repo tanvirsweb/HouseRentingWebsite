@@ -175,20 +175,7 @@
 
             header("location:index.php");
         }
-
-        public function add_category($data){
-            $person_id=$data['person_id'];
-            $cat_name=$data['cat_name'];
-            $cat_des=$data['cat_des'];
-            //cat_id must be set AI (primary key & auto increment ) -> otherwise for 1st entry id=0 for other entry also id=0 will be tried...copy primary key
-            $query="INSERT INTO category(cat_name,cat_des,ctg_author_id) VALUE('$cat_name','$cat_des',$person_id)";
-            if(mysqli_query($this->conn,$query)){
-                return "Category Added Successfully!";
-            }
-            else{
-                return "Failed to Add Category!";
-            }
-        }
+        
         public function add_city($data){            
             $city_name=$data['city_name'];    
             $post_code=$data['post_code'];
@@ -274,6 +261,22 @@
             }
         }
 
+        public function add_category($data){
+            $person_id=$data['person_id'];
+            $cat_name=$data['cat_name'];
+            $cat_des=$data['cat_des'];
+            //cat_id must be set AI (primary key & auto increment ) -> otherwise for 1st entry id=0 for other entry also id=0 will be tried...copy primary key
+            if($_SESSION['person']=='admin')
+                $query="INSERT INTO category(cat_name,cat_des,ctg_author_id) VALUE('$cat_name','$cat_des',$person_id)";
+            else 
+                $query="INSERT INTO category_req(cat_name,cat_des,ctg_author_id) VALUE('$cat_name','$cat_des',$person_id)";                
+            if(mysqli_query($this->conn,$query)){
+                return "Category Added Successfully!";
+            }
+            else{
+                return "Failed to Add Category!";
+            }
+        }
         public function display_category(){            
             $query="SELECT * FROM category ORDER BY cat_name";
             if(mysqli_query($this->conn,$query)){
@@ -281,30 +284,62 @@
                 return $category;
             }
         }
-        
-        public function display_category_byID($id){
-            $query="SELECT * FROM category WHERE cat_id=$id";
+        public function display_category_req(){            
+            $query="SELECT * FROM category_req ORDER BY cat_name";
             if(mysqli_query($this->conn,$query)){
                 $category=mysqli_query($this->conn,$query);
                 return $category;
             }
         }
-        public function update_category($data){
+        
+        public function get_category_byID($id,$approved){
+            if($approved==1)
+                $query="SELECT * FROM category WHERE cat_id=$id";
+            else
+                $query="SELECT * FROM category_req WHERE cat_id=$id";
+            if(mysqli_query($this->conn,$query)){
+                $category=mysqli_query($this->conn,$query);
+                return $category;
+            }
+        }
+        public function update_category($data,){
             $cat_id=$data['cat_id'];
             $cat_name=$data['cat_name'];
             $cat_des=$data['cat_des'];
-
-            $query="UPDATE category SET cat_name='$cat_name',cat_des='$cat_des' WHERE cat_id=$cat_id ";
+            
+            if($data['approved']==1)
+                $query="UPDATE category SET cat_name='$cat_name',cat_des='$cat_des' WHERE cat_id=$cat_id ";
+            else
+                $query="UPDATE category_req SET cat_name='$cat_name',cat_des='$cat_des' WHERE cat_id=$cat_id ";
             if(mysqli_query($this->conn,$query)){
                 return "Category Updated Successfully!!";
             }
         }
 
-        public function delete_category_byID($id){
-            $query="DELETE FROM category WHERE cat_id=$id";
+        public function delete_category_byID($id,$approved){
+            if($approved==1)
+                $query="DELETE FROM category WHERE cat_id=$id";
+            else//0
+                $query="DELETE FROM category_req WHERE cat_id=$id";
             if(mysqli_query($this->conn,$query)){                
                 return "Category Deleted Successfully";
             }
+        }
+        public function approve_category($id){
+            $query="SELECT* FROM category_ req WHERE cat_id=$id";
+            if(mysqli_query($this->conn,$query)){                
+                $data=mysqli_fetch_assoc(mysqli_query($this->conn,$query));
+            }
+            $cat_name=$data['cat_name'];
+            $cat_des=$data['cat_des'];
+            $ctg_author_id=$data['ctg_author_id'];
+            $query="INSERT INTO category (cat_name,cat_des,ctg_author_id) VALUE('$cat_name','$cat_des',$ctg_author_id)";
+            if(mysqli_query($this->conn,$query)){ 
+                //get ctg data from 'category_req' by id > insert these tuple(row) in 'category' table > delete this row from 'category_req'               
+                $query="DELETE FROM category_req WHERE cat_id=$id";
+                if(mysqli_query($this->conn,$query))
+                    return "Category Approved Successfully!!";        
+            }            
         }
 
         public function add_post($data){
