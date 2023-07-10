@@ -21,8 +21,8 @@
             Action
             </a>            
             <ul class="dropdown-menu  dropdown-menu-end">
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="#">Activity Log</a></li>                
+                <li><a class="dropdown-item" href="account_setting.php">Settings</a></li>
+                <!-- <li><a class="dropdown-item" href="#">Activity Log</a></li>                 -->
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="?logout=logout">Logout</a></li>
             </ul>

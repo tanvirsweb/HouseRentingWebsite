@@ -8,7 +8,7 @@ RUET,CSE_19_A
 
 
 admins entered:
-admin@gmail.com / adm@gmail.com / ab3456cd@gmail.com / abc@gmail.com, 
+admin@gmail.com / adm@gmail.com / tanvir@gmail.com / abc@gmail.com, 
 pass: 123
 
 ( In database password are stored in encrypted form ( md5(pass) ) in 'admin' table. )

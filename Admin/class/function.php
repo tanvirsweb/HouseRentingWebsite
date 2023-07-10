@@ -146,6 +146,39 @@
                
             }
         }
+        public function get_account_info(){            
+            $id=$_SESSION['person_id'];
+            if($_SESSION['person']=='admin')
+                $query="SELECT * FROM admin_info WHERE admin_id=$id";
+            else//user
+                $query="SELECT * FROM user_info WHERE user_id=$id";
+            // query succes?
+            if(mysqli_query($this->conn,$query)){
+               $data= mysqli_query($this->conn,$query);
+               return $data;
+            }
+        }
+        public function update_account($data){            
+            $id=$_SESSION['person_id'];
+            $name=$data['name'];
+            $email=$data['email'];
+
+            if($_SESSION['person']=='admin'){
+                $query="SELECT * FROM admin_info WHERE admin_id!=$id AND admin_email='$email' ";
+                $query_update="UPDATE admin_info SET admin_name='$name',admin_email='$email' WHERE admin_id=$id";
+            }
+            else{//user
+                $query="SELECT * FROM user_info WHERE user_id!=$id AND user_email='$email' ";
+                $query_update="UPDATE user_info SET user_name='$name',user_email='$email' WHERE user_id=$id";
+            }
+            $q=mysqli_query($this->conn,$query);
+            if(mysqli_num_rows($q)>0){
+                return "This email is already used.Try with another one...";
+            }                                    
+            elseif(mysqli_query($this->conn,$query_update)){
+                    return "Account Updated Successfully !!";                
+            }
+        }
 
         public function user_signup($data){
             $user_name=$data['user_name'];

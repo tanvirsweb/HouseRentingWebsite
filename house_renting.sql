@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 26, 2023 at 06:13 PM
+-- Generation Time: Jul 04, 2023 at 08:45 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -66,20 +66,32 @@ CREATE TABLE `category` (
   `cat_id` int(255) NOT NULL,
   `cat_name` text NOT NULL,
   `cat_des` text NOT NULL,
-  `ctg_author_id` int(255) NOT NULL,
-  `ctg_approved` tinyint(4) NOT NULL
+  `ctg_author_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `category`
 --
 
-INSERT INTO `category` (`cat_id`, `cat_name`, `cat_des`, `ctg_author_id`, `ctg_approved`) VALUES
-(6, 'Land', 'Here we are going to post about land for renting.', 7, 0),
-(7, 'Hostel', 'Here we are going to post about Hostel.', 1, 0),
-(8, 'Girls Hostel', 'Here we are going to post about girls hostel.', 1, 0),
-(9, 'Apartment', 'Here we are going to post about apartment.It consists of several bed room,kitchen,dining etc.', 1, 0),
-(11, 'abc', 'abc', 1, 0);
+INSERT INTO `category` (`cat_id`, `cat_name`, `cat_des`, `ctg_author_id`) VALUES
+(6, 'Land', 'Here we are going to post about land for renting.', 7),
+(7, 'Hostel', 'Here we are going to post about Hostel.', 1),
+(8, 'Girls Hostel', 'Here we are going to post about girls hostel.', 1),
+(9, 'Apartment', 'Here we are going to post about apartment.It consists of several bed room,kitchen,dining etc.', 1),
+(19, 'Hotel', 'Here we are talking about about hotel where people stay paying rent for some time.', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `category_req`
+--
+
+CREATE TABLE `category_req` (
+  `cat_id` int(255) NOT NULL,
+  `cat_name` text NOT NULL,
+  `cat_des` text NOT NULL,
+  `ctg_author_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -90,17 +102,41 @@ INSERT INTO `category` (`cat_id`, `cat_name`, `cat_des`, `ctg_author_id`, `ctg_a
 CREATE TABLE `city` (
   `city_id` int(11) NOT NULL,
   `city_name` varchar(80) DEFAULT NULL,
-  `city_approved` tinyint(4) DEFAULT NULL
+  `post_code` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `city`
 --
 
-INSERT INTO `city` (`city_id`, `city_name`, `city_approved`) VALUES
-(1, 'Rajshahi', 1),
-(2, 'Dhaka', 1),
-(3, 'Tangail', 1);
+INSERT INTO `city` (`city_id`, `city_name`, `post_code`) VALUES
+(1, 'Rajshahi', 6000),
+(2, 'Dhaka', 1000),
+(3, 'Tangail', 1970),
+(9, 'Dinajpur', 5200),
+(12, 'Kalihati', 1970);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `city_req`
+--
+
+CREATE TABLE `city_req` (
+  `city_id` int(11) NOT NULL,
+  `city_name` varchar(80) NOT NULL,
+  `post_code` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `city_req`
+--
+
+INSERT INTO `city_req` (`city_id`, `city_name`, `post_code`, `user_id`) VALUES
+(4, 'Dhanmondi', 1209, 1),
+(5, 'Savar', 1340, 1),
+(6, 'Bashundhara', 1229, 1);
 
 -- --------------------------------------------------------
 
@@ -127,12 +163,37 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`post_id`, `post_title`, `post_content`, `post_img`, `post_ctg`, `post_author`, `post_date`, `rent_from`, `city_id`, `rent_amount`, `post_status`) VALUES
-(20, '5 Seats available in Amena mess.', 'From July 2023 5 seats in 3rd floor will be available in Amena mess.Rent 1800TK per seat in double seat room.', '1686244768.jpg', 7, 1, '2023-06-05', '2023-06-05', 1, 1700, 1),
-(28, 'Seat in BSB mess available', 'From July 2023 10 seats in BSB mess will be available.Rent of each seat is 2100Tk per month.', '1686247299.jpg', 7, 1, '2023-06-05', '2023-06-05', 1, 1800, 1),
-(31, 'Seat avaiable in Nurjahan Mess from next July 2023', 'There will be 3 seats avaiable in Nurjahan Mess from next July 2023 in 4th floor.Seat rent 2000TK/month', '1686245594.jpg', 8, 1, '2023-06-08', '2023-06-08', 1, 1900, 1),
-(32, 'ABC aparment is available ', 'ABC aparment is available from July 2023.Three bedroom,one kitchen,2 bathroom.Rent 8000TK/month', '1686245247.jpg', 9, 1, '2023-06-08', '2023-06-08', 1, 1800, 1),
-(34, 'ZY Land is available ', 'ZY Land is available.Rent about 8000TK/month.', '1686452412.jpg', 6, 2, '2023-06-11', '2023-06-11', 1, 1800, 1),
-(35, 'abc', 'abc content', 'abc.img', 11, 2, '2023-06-26', '2023-06-26', 2, 1800, 1);
+(20, '5 Seats available in Amena mess.', 'From July 2023 5 seats in 3rd floor will be available in Amena mess.Rent 1800TK per seat in double seat room.', '1686244768.jpg', 7, 1, '2023-06-05', '2023-06-05', 3, 1700, 1),
+(28, 'Seat in BSB mess available', 'From July 2023 10 seats in BSB mess will be available.Rent of each seat is 1800Tk per month.', '1686247299.jpg', 7, 1, '2023-06-05', '2023-06-05', 1, 1800, 1),
+(31, 'Seat avaiable in Nurjahan Mess from next July 2023', 'There will be 3 seats avaiable in Nurjahan Mess from next July 2023 in 4th floor.Seat rent 1900TK/month', '1686245594.jpg', 8, 1, '2023-06-08', '2023-06-08', 2, 1900, 1),
+(32, 'ABC aparment is available ', 'ABC aparment is available from July 2023.Three bedroom,one kitchen,2 bathroom.Rent 2100TK/month', '1686245247.jpg', 9, 1, '2023-06-08', '2023-06-08', 3, 2100, 1),
+(34, 'ZY Land is available ', 'ZY Land is available.Rent about 8000TK/month.', '1686452412.jpg', 6, 2, '2023-06-11', '2023-06-11', 1, 8000, 1),
+(35, 'abc', 'abc content', '1234.jpg', 6, 2, '2023-06-26', '2023-06-26', 2, 2200, 1),
+(37, 'Seat available at ABC hostel', '     Seat available at ABC hostel from next month.2500/- per month for dual room for each seat.     ', '1688146640.jpg', 7, 1, '2023-06-30', '2023-07-02', 1, 2500, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `post_ctg_author`
+-- (See below for the actual view)
+--
+CREATE TABLE `post_ctg_author` (
+`post_id` int(255)
+,`post_title` varchar(150)
+,`post_content` longtext
+,`post_img` varchar(255)
+,`post_date` date
+,`rent_from` date
+,`rent_amount` int(11)
+,`post_status` tinyint(3)
+,`user_id` int(11)
+,`user_name` varchar(100)
+,`user_email` varchar(100)
+,`cat_name` text
+,`cat_id` int(255)
+,`city_id` int(11)
+,`city_name` varchar(80)
+);
 
 -- --------------------------------------------------------
 
@@ -168,7 +229,7 @@ CREATE TABLE `user_info` (
   `user_id` int(11) NOT NULL,
   `user_name` varchar(100) NOT NULL,
   `user_email` varchar(100) NOT NULL,
-  `user_pass` int(11) NOT NULL
+  `user_pass` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -176,9 +237,11 @@ CREATE TABLE `user_info` (
 --
 
 INSERT INTO `user_info` (`user_id`, `user_name`, `user_email`, `user_pass`) VALUES
-(1, 'Alvi Siddique', 'alvi@gmail.com', 202),
-(2, 'Tanvir Anjom Siddique', 'tanvir@gmail.com', 202),
-(3, 'User', 'user@gmail.com', 202);
+(1, 'Alvi Siddique', 'alvi@gmail.com', '202cb962ac59075b964b07152d234b70'),
+(2, 'Tanvir Anjom Siddique', 'tanvir@gmail.com', '202cb962ac59075b964b07152d234b70'),
+(7, 'Anik', 'user@gmail.com', '202cb962ac59075b964b07152d234b70'),
+(9, 'Mahmud', 'abc@gmail.com', '202cb962ac59075b964b07152d234b70'),
+(10, 'Nafiz', 'anjom@gmail.com', '202cb962ac59075b964b07152d234b70');
 
 -- --------------------------------------------------------
 
@@ -200,6 +263,15 @@ CREATE TABLE `user_view` (
 DROP TABLE IF EXISTS `admin_view`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `admin_view`  AS SELECT `admin_info`.`admin_id` AS `admin_id`, `admin_info`.`admin_name` AS `admin_name`, `admin_info`.`admin_email` AS `admin_email` FROM `admin_info``admin_info`  ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `post_ctg_author`
+--
+DROP TABLE IF EXISTS `post_ctg_author`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `post_ctg_author`  AS SELECT `posts`.`post_id` AS `post_id`, `posts`.`post_title` AS `post_title`, `posts`.`post_content` AS `post_content`, `posts`.`post_img` AS `post_img`, `posts`.`post_date` AS `post_date`, `posts`.`rent_from` AS `rent_from`, `posts`.`rent_amount` AS `rent_amount`, `posts`.`post_status` AS `post_status`, `user_info`.`user_id` AS `user_id`, `user_info`.`user_name` AS `user_name`, `user_info`.`user_email` AS `user_email`, `category`.`cat_name` AS `cat_name`, `category`.`cat_id` AS `cat_id`, `posts`.`city_id` AS `city_id`, `city`.`city_name` AS `city_name` FROM (((`posts` join `user_info` on(`posts`.`post_author` = `user_info`.`user_id`)) join `category` on(`posts`.`post_ctg` = `category`.`cat_id`)) join `city` on(`posts`.`city_id` = `city`.`city_id`))  ;
 
 -- --------------------------------------------------------
 
@@ -236,9 +308,21 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`cat_id`);
 
 --
+-- Indexes for table `category_req`
+--
+ALTER TABLE `category_req`
+  ADD PRIMARY KEY (`cat_id`);
+
+--
 -- Indexes for table `city`
 --
 ALTER TABLE `city`
+  ADD PRIMARY KEY (`city_id`);
+
+--
+-- Indexes for table `city_req`
+--
+ALTER TABLE `city_req`
   ADD PRIMARY KEY (`city_id`);
 
 --
@@ -246,9 +330,9 @@ ALTER TABLE `city`
 --
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`post_id`),
-  ADD KEY `post_ctg` (`post_ctg`),
   ADD KEY `post_author` (`post_author`),
-  ADD KEY `city_id` (`city_id`);
+  ADD KEY `city_id` (`city_id`),
+  ADD KEY `post_ctg` (`post_ctg`);
 
 --
 -- Indexes for table `user_info`
@@ -261,16 +345,40 @@ ALTER TABLE `user_info`
 --
 
 --
+-- AUTO_INCREMENT for table `category`
+--
+ALTER TABLE `category`
+  MODIFY `cat_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `category_req`
+--
+ALTER TABLE `category_req`
+  MODIFY `cat_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `city`
 --
 ALTER TABLE `city`
-  MODIFY `city_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `city_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `city_req`
+--
+ALTER TABLE `city_req`
+  MODIFY `city_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `posts`
+--
+ALTER TABLE `posts`
+  MODIFY `post_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `user_info`
 --
 ALTER TABLE `user_info`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
