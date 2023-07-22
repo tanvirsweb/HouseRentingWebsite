@@ -19,6 +19,73 @@
             
         }
         //-----------------------------------------
+        public function filterDateCityCtg($DATA,$cat_id){            
+            // ----------For checking input date is clear/set: use EMPTY() ->instead of ISSET() for correct output
+            //rent , date , city:  1 1 1
+            if(!empty($DATA['min_rent']) && !empty($DATA['max_rent']) && !empty($DATA['from_date']) && !empty($DATA['to_date'])  &&$DATA['city_id']!='All')
+            {
+                $min_rent=$DATA['min_rent'];
+                $max_rent=$DATA['max_rent'];
+                $from_date = $DATA['from_date'];
+                $to_date = $DATA['to_date'];
+                $city_id= $DATA['city_id'];
+                $query = "SELECT * FROM post_user_view WHERE rent_from BETWEEN '$from_date' AND '$to_date' AND rent_amount BETWEEN $min_rent AND $max_rent AND city_id=$city_id AND cat_id=$cat_id";                
+            }
+            //rent, date: 1 1 0
+            elseif(!empty($DATA['min_rent']) && !empty($DATA['max_rent']) && !empty($DATA['from_date']) && !empty($DATA['to_date'])  &&$DATA['city_id']=='All')
+            {
+                $min_rent=$DATA['min_rent'];
+                $max_rent=$DATA['max_rent'];
+                $from_date = $DATA['from_date'];
+                $to_date = $DATA['to_date'];
+                $query = "SELECT * FROM post_user_view WHERE rent_from BETWEEN '$from_date' AND '$to_date' AND rent_amount BETWEEN $min_rent AND $max_rent  AND cat_id=$cat_id";                
+            }
+            //rent,city: 1 0 1
+            elseif(!empty($DATA['min_rent']) && !empty($DATA['max_rent']) && (empty($DATA['from_date']) || empty($DATA['to_date']))  &&$DATA['city_id']!='All')
+            {
+                $min_rent=$DATA['min_rent'];
+                $max_rent=$DATA['max_rent'];                
+                $city_id= $DATA['city_id'];
+                $query = "SELECT * FROM post_user_view WHERE rent_amount BETWEEN $min_rent AND $max_rent AND city_id=$city_id  AND cat_id=$cat_id";                
+            }
+            //rent: 1 0 0
+            elseif(!empty($DATA['min_rent']) && !empty($DATA['max_rent']) && (empty($DATA['from_date']) || empty($DATA['to_date']))  &&$DATA['city_id']=='All')
+            {
+                $min_rent=$DATA['min_rent'];
+                $max_rent=$DATA['max_rent'];    
+                $query = "SELECT * FROM post_user_view WHERE rent_amount BETWEEN $min_rent AND $max_rent  AND cat_id=$cat_id";                
+            }
+             //date , city:0 1 1  
+             elseif( (empty($DATA['min_rent']) || empty($DATA['max_rent']) ) && !empty($DATA['from_date']) && !empty($DATA['to_date']) &&$DATA['city_id']!='All')
+             {
+                 $from_date = $DATA['from_date'];
+                 $to_date = $DATA['to_date'];
+                 $city_id=$DATA['city_id'];
+                 $query = "SELECT * FROM post_user_view WHERE  rent_from BETWEEN '$from_date' AND '$to_date' AND city_id=$city_id  AND cat_id=$cat_id";                                
+             }
+            
+            // filter by:date : 0 1 0
+            elseif( (empty($DATA['min_rent']) || empty($DATA['max_rent']) ) && !empty($DATA['from_date']) && !empty($DATA['to_date']) &&$DATA['city_id']=='All')
+            {
+                $from_date = $DATA['from_date'];
+                $to_date = $DATA['to_date'];
+                $query = "SELECT * FROM post_user_view WHERE rent_from BETWEEN '$from_date' AND '$to_date'   AND cat_id=$cat_id";                
+            }
+           
+            // filter by: city: 0 0 1
+            elseif((empty($DATA['min_rent']) || empty($DATA['max_rent']) ) && (empty($DATA['from_date']) || empty($DATA['to_date']) ) && $DATA['city_id']!='All'){
+                $city_id=$DATA['city_id'];
+                $query = "SELECT * FROM post_user_view WHERE city_id=$city_id  AND cat_id=$cat_id";                                
+            }
+            // 0 0 0 & other options
+            else{
+                $query = "SELECT * FROM post_user_view  WHERE cat_id=$cat_id";                
+            }
+            $query_run = mysqli_query($this->conn, $query);
+            return $query_run;
+        }
+        //end of Filter function
+
         public function filterDateCity($DATA){            
             // ----------For checking input date is clear/set: use EMPTY() ->instead of ISSET() for correct output
             //rent , date , city:  1 1 1
@@ -75,7 +142,7 @@
             // filter by: city: 0 0 1
             elseif((empty($DATA['min_rent']) || empty($DATA['max_rent']) ) && (empty($DATA['from_date']) || empty($DATA['to_date']) ) && $DATA['city_id']!='All'){
                 $city_id=$DATA['city_id'];
-                $query = "SELECT * FROM post_user_view WHERE city_id=$city_id";                $_SESSION['msg']= "<h1>filter !=date & !=all</h1>";                
+                $query = "SELECT * FROM post_user_view WHERE city_id=$city_id";                                
             }
             // 0 0 0 & other options
             else{
@@ -181,8 +248,9 @@
         }
 
         public function user_signup($data){
-            $user_name=$data['user_name'];
-            $user_email=$data['user_email'];
+            //mysqli_real_escape_string($this->conn,) = escape /n,/r ctrl+z etc invalid characters
+            $user_name= mysqli_real_escape_string($this->conn,$data['user_name']);
+            $user_email=mysqli_real_escape_string($this->conn,$data['user_email']);
             $user_pass=md5($data['user_pass']);
 
             $query="SELECT * FROM user_info where user_email='$user_email'";            
@@ -210,8 +278,8 @@
         }
         
         public function add_city($data){            
-            $city_name=$data['city_name'];    
-            $post_code=$data['post_code'];
+            $city_name=mysqli_real_escape_string($this->conn,$data['city_name']);    
+            $post_code=mysqli_real_escape_string($this->conn,$data['post_code']);
             $user_id=$_SESSION['person_id'];
 
             if($_SESSION['person']=='admin')
@@ -256,8 +324,8 @@
             }
         }
         public function update_city($data){        
-            $city_id=$data['city_id'];
-            $city_name=$data['city_name'];
+            $city_id=mysqli_real_escape_string($this->conn,$data['city_id']);
+            $city_name=mysqli_real_escape_string($this->conn,$data['city_name']);
             $post_code=$data['post_code'];
             
             if($data['approved']==1)
@@ -296,8 +364,8 @@
 
         public function add_category($data){
             $person_id=$data['person_id'];
-            $cat_name=$data['cat_name'];
-            $cat_des=$data['cat_des'];
+            $cat_name=mysqli_real_escape_string($this->conn,$data['cat_name']);
+            $cat_des=mysqli_real_escape_string($this->conn,$data['cat_des']);
             //cat_id must be set AI (primary key & auto increment ) -> otherwise for 1st entry id=0 for other entry also id=0 will be tried...copy primary key
             if($_SESSION['person']=='admin')
                 $query="INSERT INTO category(cat_name,cat_des,ctg_author_id) VALUE('$cat_name','$cat_des',$person_id)";
@@ -337,8 +405,8 @@
         }
         public function update_category($data,){
             $cat_id=$data['cat_id'];
-            $cat_name=$data['cat_name'];
-            $cat_des=$data['cat_des'];
+            $cat_name=mysqli_real_escape_string($this->conn,$data['cat_name']);
+            $cat_des=mysqli_real_escape_string($this->conn,$data['cat_des']);
             
             if($data['approved']==1)
                 $query="UPDATE category SET cat_name='$cat_name',cat_des='$cat_des' WHERE cat_id=$cat_id ";
@@ -376,8 +444,8 @@
         }
 
         public function add_post($data){
-            $post_title=$data['post_title'];
-            $post_content=$data['post_content'];
+            $post_title=mysqli_real_escape_string($this->conn,$data['post_title']);
+            $post_content=mysqli_real_escape_string($this->conn,$data['post_content']);
             
             $post_img=$_FILES['post_img']['name'];  
             // convert string to array.Divide by '.' character.
@@ -494,8 +562,8 @@
         public function edit_post($data){
             $post_id=$data['edit_post_id'];
 
-            $post_title=$data['post_title'];
-            $post_content=$data['post_content'];                                            
+            $post_title=mysqli_real_escape_string($this->conn,$data['post_title']);
+            $post_content=mysqli_real_escape_string($this->conn,$data['post_content']);                                            
             $post_category=$data['post_category'];
             $rent_from=$data['rent_from'];            
             $rent_amount=$data['rent_amount'];            

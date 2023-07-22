@@ -1,11 +1,11 @@
 <section class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card mt-5">
+            <div class="card mt-5 bg-dark text-light">
                 <div class="card-header">
                     <h4>Search:</h4>
                 </div>
-                <div class="card-body bg-light">
+                <div class="card-body bg-dark text-light">
                 
                     <form action="" method="POST">
                         <div class="row">
@@ -64,8 +64,14 @@
                 </div>
             </div>                        
             <?php 
+            // for filter atleast city will be selected by default
                 if(!empty($_POST['city_id'])){
-                    $posts=$obj->filterDateCity($_POST); 
+                    if(isset($_GET['status']) && isset($_GET['ctg'])){
+                        $posts=$obj->filterDateCityCtg($_POST,$_GET['cat_id']);        
+                    }
+                    else{
+                        $posts=$obj->filterDateCity($_POST); 
+                    }                    
                 }
                                            
             ?>                        

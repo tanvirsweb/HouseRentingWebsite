@@ -46,7 +46,7 @@
         // include_once("includes/cta.php");
     ?> -->
     <?php 
-      if(empty($_GET['status']) && empty($_GET['view'])){
+      if(empty($_GET['view'])){
         include_once('includes/filter_search.php'); 
       }
     ?>

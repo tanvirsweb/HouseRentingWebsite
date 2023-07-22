@@ -24,7 +24,7 @@
             ?>
             
             <!-- <li class="nav-item"> -->
-            <a class="nav-link" href="index.php?status=filterctg&&ctg=<?php echo $category['cat_name']; ?>">
+            <a class="nav-link" href="index.php?status=filterctg&&ctg=<?php echo $category['cat_name']; ?>&&cat_id=<?php echo $category['cat_id']; ?>">
                 <?php echo $category['cat_name']; ?>
             </a>
             </li> 
