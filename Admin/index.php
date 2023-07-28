@@ -18,7 +18,7 @@
         //after loged in >if someone wants to stay in login(index.php) page 
         //it won't allow you to go to index.php page again
         // redirect to dashboard.php page after coming to this login(index.php) page
-        header("location:dashboard.php");
+        header("location:account_setting.php");
     }
 ?>
 

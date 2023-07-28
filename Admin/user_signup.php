@@ -14,7 +14,7 @@
         //after loged in >if someone wants to stay in login(index.php) page 
         //it won't allow you to go to index.php page again
         // redirect to dashboard.php page after coming to this login(index.php) page
-        header("location:dashboard.php");
+        header("location:account_setting.php");
     }
 ?>
 
@@ -35,20 +35,20 @@
                                             
                                             <div class="form-group">
                                                 <label class="small mb-1" for="user_name">Name</label>
-                                                <input name="user_name" class="form-control py-4" id="user_name" type="text" placeholder="Enter your name" />
+                                                <input name="user_name" class="form-control py-4" id="user_name" type="text" placeholder="Enter your name" required/>
                                             </div>
                                             
                                             <div class="form-group">
                                                 <label class="small mb-1" for="inputEmailAddress">Email</label>
-                                                <input name="user_email" class="form-control py-4" id="inputEmailAddress" type="email" placeholder="Enter email address" />
+                                                <input name="user_email" class="form-control py-4" id="inputEmailAddress" type="email" placeholder="Enter email address" required/>
                                             </div>
                                             <div class="form-group">
                                                 <label class="small mb-1" for="inputPassword">Password</label>
-                                                <input name="user_pass" class="form-control py-4" id="inputPassword" type="password" placeholder="Enter password" />
+                                                <input name="user_pass" class="form-control py-4" id="inputPassword" type="password" placeholder="Enter password" required/>
                                             </div>
                                             <div class="form-group">
                                                 <label class="small mb-1" for="rinputPassword">Confirm Password</label>
-                                                <input name="ruser_pass" class="form-control py-4" id="rinputPassword" type="password" placeholder="Enter password" />
+                                                <input name="ruser_pass" class="form-control py-4" id="rinputPassword" type="password" placeholder="Enter password" required/>
                                                 <div id="rtxt"></div>
                                             </div>
                                             <!-- <div class="form-group">
@@ -80,7 +80,7 @@
             
         </div>
        <?php include_once("includes/script.php");?>
-
+        <script>var page="signup"; </script>
        <?php include("includes/user_signup_password_match.php"); ?>
     <!-----------------Match Password-------------->
     <!-- <script>        

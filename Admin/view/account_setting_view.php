@@ -2,7 +2,7 @@
     $data= mysqli_fetch_assoc($obj->get_account_info());    
     if(isset($_POST['update_account'])){
         $msg=$obj->update_account($_POST);
-        $data= mysqli_fetch_assoc($obj->get_account_info());    
+        echo '<script type="text/javascript">window.location.href="account_setting.php";</script>';   
     }
 ?>
 
@@ -23,12 +23,22 @@
             <input name="email" class="form-control py-4" id="email" type="email" value="<?php if($_SESSION['person']=='admin') echo $data['admin_email']; else echo $data['user_email'];?>" required/>
         </div>
         <div class="form-group">
+            <input type="hidden" name="old_password" value="<?php if($_SESSION['person']=='admin') echo $data['admin_pass']; else echo $data['user_pass'];?>">
             <label class="mb-1" for="password">Password</label>
-            <input name="password" class="form-control py-4" id="password" type="password" value="<?php if($_SESSION['person']=='admin') echo $data['admin_pass']; else echo $data['user_pass'];?>" required/>
+            <input name="password" class="form-control py-4" id="inputPassword" type="password" value="<?php if($_SESSION['person']=='admin') echo $data['admin_pass']; else echo $data['user_pass'];?>" required/>
+        </div>
+        <div class="form-group">            
+            <label class="mb-1" for="password">Confirm Password</label>
+            <input name="password" class="form-control py-4" id="rinputPassword" type="password" value="<?php if($_SESSION['person']=='admin') echo $data['admin_pass']; else echo $data['user_pass'];?>" required/>
+            <div id="rtxt"></div>
         </div>
         
         <div>
-            <input type="submit" name="update_account" value="Update Account" class="btn btn-primary">
+            <input type="submit" id="submit" name="update_account" value="Update Account" class="btn btn-primary">
         </div>
     </form>
 </div>
+<script>
+    var page="account";
+</script>
+<?php include("includes/user_signup_password_match.php"); ?>

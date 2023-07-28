@@ -4,10 +4,12 @@
             
             <div class="nav">
                 <div class="sb-sidenav-menu-heading">Core</div>
+                <?php if($_SESSION['person']!='admin'){?>
                 <a class="nav-link" href="dashboard.php">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Dashboard
                 </a>
+                <?php }?>
                 
                 <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -74,7 +76,9 @@
                         </div>
                         <div class="collapse" id="post-collapse">
                         <ul class="list-unstyled btn-toggle-nav fw-normal  ms-2 pb-1 small">
+                        <?php if($_SESSION['person']!='admin'){?>
                             <li><a class="nav-link" href="add_post.php">Add Post</a></li>
+                        <?php } ?>
                             <li><a class="nav-link" href="manage_post.php">Manage Post</a></li>                            
                         </ul>
                         </div>

@@ -2,8 +2,9 @@
     const passwordReInput = document.getElementById('rinputPassword');
     const passwordInput=document.getElementById('inputPassword');
     
-    const submitBtn=document.getElementById("submit");
-    submitBtn.disabled = true;
+    const submitBtn=document.getElementById("submit");    
+    if(page=="account") submitBtn.disabled = false;
+    else submitBtn.disabled = true;
 
     // check if password matches
     passwordReInput.addEventListener('input', function(event) {

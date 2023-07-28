@@ -167,7 +167,7 @@
                //there is such admin_emai & password ? / null
                if($user_tuple){
                 // password & email matched-> go to dashboard.php page
-                    header('Location:dashboard.php');  
+                    header('Location:account_setting.php');  
 
                     // query returns user_tuple.Convert it in array using mysqli_fetch_assoc($user_tuple) function.
                     // keep query data in an arry
@@ -197,7 +197,7 @@
                //there is such admin_emai & password ? / null
                if($admin_tuple){
                 // password & email matched-> go to dashboard.php page
-                    header('Location:dashboard.php');  
+                    header('Location:account_setting.php');  
 
                     // query returns tuple.Convert it in array using mysqli_fetch_assoc($admin_tuple) function.
                     // keep query data in an arry
@@ -229,14 +229,26 @@
             $id=$_SESSION['person_id'];
             $name=$data['name'];
             $email=$data['email'];
+            $password=$data['password'];
+            $old_password=$data['old_password'];
 
             if($_SESSION['person']=='admin'){
                 $query="SELECT * FROM admin_info WHERE admin_id!=$id AND admin_email='$email' ";
-                $query_update="UPDATE admin_info SET admin_name='$name',admin_email='$email' WHERE admin_id=$id";
+                if($password==$old_password || md5($password)==$old_password)
+                    $query_update="UPDATE admin_info SET admin_name='$name',admin_email='$email' WHERE admin_id=$id";
+                else{ 
+                    $password=md5($password);
+                    $query_update="UPDATE admin_info SET admin_name='$name',admin_email='$email',admin_pass='$password' WHERE admin_id=$id";
+                }
             }
             else{//user
-                $query="SELECT * FROM user_info WHERE user_id!=$id AND user_email='$email' ";
-                $query_update="UPDATE user_info SET user_name='$name',user_email='$email' WHERE user_id=$id";
+                $query="SELECT * FROM user_info WHERE user_id!=$id AND user_email='$email' ";                
+                if($password==$old_password || md5($password)==$old_password)
+                    $query_update="UPDATE user_info SET user_name='$name',user_email='$email' WHERE user_id=$id";
+                else{ 
+                    $password=md5($password);
+                    $query_update="UPDATE user_info SET user_name='$name',user_email='$email',user_pass='$password' WHERE user_id=$id";
+                }
             }
             $q=mysqli_query($this->conn,$query);
             if(mysqli_num_rows($q)>0){
@@ -577,6 +589,35 @@
             }
             else{
                 return "Failed to Update Post!!";
+            }
+        }
+
+        public function add_msg($data){
+            $post_id=$data['post_id'];
+            $name=mysqli_real_escape_string($this->conn,$data['name']);
+            $contact_info=mysqli_real_escape_string($this->conn,$data['contact_info']);
+            $msg=mysqli_real_escape_string($this->conn,$data['msg']); 
+
+            $query="INSERT INTO msg(post_id,name,contact_info,msg,msg_time) VALUES($post_id,'$name','$contact_info','$msg',now())";                       
+            if(mysqli_query($this->conn,$query)){
+                return "Msg added successfully!";
+            }
+        }
+        public function get_msg($post_id){            
+            $query="SELECT* FROM MSG WHERE post_id=$post_id ORDER BY msg_time DESC";
+            $query_run=mysqli_query($this->conn,$query);                       
+            return $query_run;
+        }
+        
+
+        public function reply_msg($data){
+            $msg_id=$data['msg_id'];            
+            $msg_reply=mysqli_real_escape_string($this->conn,$data['msg_reply']); 
+
+            $query="UPDATE msg SET msg_reply='$msg_reply' WHERE msg_id=$msg_id";  
+            $query_run=mysqli_query($this->conn,$query);                     
+            if($query_run){
+                return "Msg replied successfully!";
             }
         }
 
