@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 04, 2023 at 08:45 AM
+-- Generation Time: Jul 29, 2023 at 06:09 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -40,21 +40,9 @@ CREATE TABLE `admin_info` (
 
 INSERT INTO `admin_info` (`admin_id`, `admin_email`, `admin_name`, `admin_pass`) VALUES
 (1, 'admin@gmail.com', 'Tanvir Anjom Siddique', '202cb962ac59075b964b07152d234b70'),
-(7, 'adm@gmail.com', 'Alvi Siddique', '202cb962ac59075b964b07152d234b70'),
-(9, 'ab3456cd@gmail.com', 'Anj234344om', 'd81f9c1be2e08964bf9f24b15f0e4900'),
-(10, 'abc@gmail.com', 'abc', '202cb962ac59075b964b07152d234b70');
-
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `admin_view`
--- (See below for the actual view)
---
-CREATE TABLE `admin_view` (
-`admin_id` int(1)
-,`admin_name` text
-,`admin_email` varchar(60)
-);
+(7, 'adm@gmail.com', 'Admin Name', '202cb962ac59075b964b07152d234b70'),
+(9, 'tanvir@gmail.com', 'Tanvir ', 'd81f9c1be2e08964bf9f24b15f0e4900'),
+(10, 'abc@gmail.com', 'Mr. Abc', '202cb962ac59075b964b07152d234b70');
 
 -- --------------------------------------------------------
 
@@ -92,6 +80,13 @@ CREATE TABLE `category_req` (
   `cat_des` text NOT NULL,
   `ctg_author_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `category_req`
+--
+
+INSERT INTO `category_req` (`cat_id`, `cat_name`, `cat_des`, `ctg_author_id`) VALUES
+(3, 'Resturant', 'Here we are talking about resturant where people eat by payment.', 1);
 
 -- --------------------------------------------------------
 
@@ -141,6 +136,32 @@ INSERT INTO `city_req` (`city_id`, `city_name`, `post_code`, `user_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `msg`
+--
+
+CREATE TABLE `msg` (
+  `msg_id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `name` varchar(80) NOT NULL,
+  `contact_info` varchar(100) NOT NULL,
+  `msg` text NOT NULL,
+  `msg_reply` text DEFAULT NULL,
+  `msg_time` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `msg`
+--
+
+INSERT INTO `msg` (`msg_id`, `post_id`, `name`, `contact_info`, `msg`, `msg_reply`, `msg_time`) VALUES
+(2, 38, 'Anirban', 'anik@gmail.com', 'Location ?', 'Next to Talaimari Bazar Mosque', '2023-07-28 22:30:14'),
+(3, 38, 'Anik', 'anik@gmail.com', 'I want to rent this apartment.', 'Call me at 017123456789 number.', '2023-07-28 22:30:51'),
+(5, 38, 'Tamim', 'tamim@gamil.com', 'How much rent??', 'BDT 8k', '2023-07-29 21:20:43'),
+(6, 37, 'Alvi', 'alvi@gmail.com', '2500 for each person? or total?', '2500 TK Per person', '2023-07-29 21:53:00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `posts`
 --
 
@@ -163,37 +184,14 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`post_id`, `post_title`, `post_content`, `post_img`, `post_ctg`, `post_author`, `post_date`, `rent_from`, `city_id`, `rent_amount`, `post_status`) VALUES
-(20, '5 Seats available in Amena mess.', 'From July 2023 5 seats in 3rd floor will be available in Amena mess.Rent 1800TK per seat in double seat room.', '1686244768.jpg', 7, 1, '2023-06-05', '2023-06-05', 3, 1700, 1),
-(28, 'Seat in BSB mess available', 'From July 2023 10 seats in BSB mess will be available.Rent of each seat is 1800Tk per month.', '1686247299.jpg', 7, 1, '2023-06-05', '2023-06-05', 1, 1800, 1),
-(31, 'Seat avaiable in Nurjahan Mess from next July 2023', 'There will be 3 seats avaiable in Nurjahan Mess from next July 2023 in 4th floor.Seat rent 1900TK/month', '1686245594.jpg', 8, 1, '2023-06-08', '2023-06-08', 2, 1900, 1),
-(32, 'ABC aparment is available ', 'ABC aparment is available from July 2023.Three bedroom,one kitchen,2 bathroom.Rent 2100TK/month', '1686245247.jpg', 9, 1, '2023-06-08', '2023-06-08', 3, 2100, 1),
-(34, 'ZY Land is available ', 'ZY Land is available.Rent about 8000TK/month.', '1686452412.jpg', 6, 2, '2023-06-11', '2023-06-11', 1, 8000, 1),
-(35, 'abc', 'abc content', '1234.jpg', 6, 2, '2023-06-26', '2023-06-26', 2, 2200, 1),
-(37, 'Seat available at ABC hostel', '     Seat available at ABC hostel from next month.2500/- per month for dual room for each seat.     ', '1688146640.jpg', 7, 1, '2023-06-30', '2023-07-02', 1, 2500, 1);
-
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `post_ctg_author`
--- (See below for the actual view)
---
-CREATE TABLE `post_ctg_author` (
-`post_id` int(255)
-,`post_title` varchar(150)
-,`post_content` longtext
-,`post_img` varchar(255)
-,`post_date` date
-,`rent_from` date
-,`rent_amount` int(11)
-,`post_status` tinyint(3)
-,`user_id` int(11)
-,`user_name` varchar(100)
-,`user_email` varchar(100)
-,`cat_name` text
-,`cat_id` int(255)
-,`city_id` int(11)
-,`city_name` varchar(80)
-);
+(20, '5 Seats available in Amena mess.', 'From July 2023 5 seats in 3rd floor will be available in Amena mess.Rent 1800TK per seat in double seat room.', '1688454375.jpg', 7, 1, '2023-06-05', '2023-06-05', 3, 1700, 1),
+(28, 'Seat in BSB mess available', 'From July 2023 10 seats in BSB mess will be available.Rent of each seat is 1800Tk per month.', '1688454353.jpeg', 7, 1, '2023-06-05', '2023-06-05', 1, 1800, 1),
+(31, 'Seat avaiable in Nurjahan Mess from next July 2023', 'There will be 3 seats avaiable in Nurjahan Mess from next July 2023 in 4th floor.Seat rent 1900TK/month', '1688486785.jpeg', 8, 1, '2023-06-08', '2023-06-08', 2, 1900, 1),
+(32, 'ABC aparment is available ', 'ABC aparment is available from July 2023.Three bedroom,one kitchen,2 bathroom.Rent 2100TK/month', '1688486933.jpeg', 9, 1, '2023-06-08', '2023-06-08', 3, 2100, 1),
+(34, 'ZY Land is available ', 'ZY Land is available.Rent about 8000TK/month.', '1688492711.jpeg', 6, 2, '2023-06-11', '2023-06-11', 1, 8000, 1),
+(35, 'abc', 'abc content', '1688493087.jpeg', 6, 2, '2023-06-26', '2023-06-26', 2, 2200, 1),
+(37, 'Seat available at ABC hostel', '     Seat available at ABC hostel from next month.2500/- per month for dual room for each seat.     ', '1688454323.jpeg', 7, 1, '2023-06-30', '2023-07-02', 1, 2500, 1),
+(38, 'Apartment available at Talaimari.', ' Apartment available at Talaimari from next July.Rent amount BDT 8000.', '1688454078.jpeg', 9, 1, '2023-07-04', '2023-07-04', 2, 80000, 1);
 
 -- --------------------------------------------------------
 
@@ -246,50 +244,11 @@ INSERT INTO `user_info` (`user_id`, `user_name`, `user_email`, `user_pass`) VALU
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `user_view`
--- (See below for the actual view)
---
-CREATE TABLE `user_view` (
-`user_id` int(11)
-,`user_name` varchar(100)
-,`user_email` varchar(100)
-);
-
--- --------------------------------------------------------
-
---
--- Structure for view `admin_view`
---
-DROP TABLE IF EXISTS `admin_view`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `admin_view`  AS SELECT `admin_info`.`admin_id` AS `admin_id`, `admin_info`.`admin_name` AS `admin_name`, `admin_info`.`admin_email` AS `admin_email` FROM `admin_info``admin_info`  ;
-
--- --------------------------------------------------------
-
---
--- Structure for view `post_ctg_author`
---
-DROP TABLE IF EXISTS `post_ctg_author`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `post_ctg_author`  AS SELECT `posts`.`post_id` AS `post_id`, `posts`.`post_title` AS `post_title`, `posts`.`post_content` AS `post_content`, `posts`.`post_img` AS `post_img`, `posts`.`post_date` AS `post_date`, `posts`.`rent_from` AS `rent_from`, `posts`.`rent_amount` AS `rent_amount`, `posts`.`post_status` AS `post_status`, `user_info`.`user_id` AS `user_id`, `user_info`.`user_name` AS `user_name`, `user_info`.`user_email` AS `user_email`, `category`.`cat_name` AS `cat_name`, `category`.`cat_id` AS `cat_id`, `posts`.`city_id` AS `city_id`, `city`.`city_name` AS `city_name` FROM (((`posts` join `user_info` on(`posts`.`post_author` = `user_info`.`user_id`)) join `category` on(`posts`.`post_ctg` = `category`.`cat_id`)) join `city` on(`posts`.`city_id` = `city`.`city_id`))  ;
-
--- --------------------------------------------------------
-
---
 -- Structure for view `post_user_view`
 --
 DROP TABLE IF EXISTS `post_user_view`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `post_user_view`  AS SELECT `posts`.`post_id` AS `post_id`, `posts`.`post_title` AS `post_title`, `posts`.`post_content` AS `post_content`, `posts`.`post_img` AS `post_img`, `posts`.`post_date` AS `post_date`, `posts`.`rent_from` AS `rent_from`, `posts`.`rent_amount` AS `rent_amount`, `posts`.`post_status` AS `post_status`, `user_info`.`user_id` AS `user_id`, `user_info`.`user_name` AS `user_name`, `user_info`.`user_email` AS `user_email`, `category`.`cat_name` AS `cat_name`, `category`.`cat_id` AS `cat_id`, `posts`.`city_id` AS `city_id`, `city`.`city_name` AS `city_name` FROM (((`posts` join `user_info` on(`posts`.`post_author` = `user_info`.`user_id`)) join `category` on(`posts`.`post_ctg` = `category`.`cat_id`)) join `city` on(`posts`.`city_id` = `city`.`city_id`))  ;
-
--- --------------------------------------------------------
-
---
--- Structure for view `user_view`
---
-DROP TABLE IF EXISTS `user_view`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `user_view`  AS SELECT `user_info`.`user_id` AS `user_id`, `user_info`.`user_name` AS `user_name`, `user_info`.`user_email` AS `user_email` FROM `user_info``user_info`  ;
 
 --
 -- Indexes for dumped tables
@@ -326,6 +285,13 @@ ALTER TABLE `city_req`
   ADD PRIMARY KEY (`city_id`);
 
 --
+-- Indexes for table `msg`
+--
+ALTER TABLE `msg`
+  ADD PRIMARY KEY (`msg_id`),
+  ADD KEY `post_id` (`post_id`);
+
+--
 -- Indexes for table `posts`
 --
 ALTER TABLE `posts`
@@ -345,6 +311,12 @@ ALTER TABLE `user_info`
 --
 
 --
+-- AUTO_INCREMENT for table `admin_info`
+--
+ALTER TABLE `admin_info`
+  MODIFY `admin_id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
@@ -354,7 +326,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `category_req`
 --
 ALTER TABLE `category_req`
-  MODIFY `cat_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `cat_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `city`
@@ -369,20 +341,32 @@ ALTER TABLE `city_req`
   MODIFY `city_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `msg`
+--
+ALTER TABLE `msg`
+  MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `post_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `user_info`
 --
 ALTER TABLE `user_info`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `msg`
+--
+ALTER TABLE `msg`
+  ADD CONSTRAINT `msg_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`);
 
 --
 -- Constraints for table `posts`
