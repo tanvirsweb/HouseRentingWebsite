@@ -608,7 +608,13 @@
             $query_run=mysqli_query($this->conn,$query);                       
             return $query_run;
         }
-        
+        public function del_msg($msg_id){            
+            $query="DELETE FROM MSG WHERE msg_id=$msg_id";
+            $query_run=mysqli_query($this->conn,$query); 
+            // if($query_run){
+            //     return 'Message deleted successfully!!';
+            // }                                 
+        }
 
         public function reply_msg($data){
             $msg_id=$data['msg_id'];            
