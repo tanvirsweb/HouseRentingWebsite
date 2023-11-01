@@ -4,7 +4,7 @@
 <div class="col-lg-8">
     <div class="all-blog-posts">
         <div class="row">
-        <?php while($postdata=mysqli_fetch_assoc($posts)){ 
+        <?php foreach($posts as $postdata)){ 
             $post_id=$postdata['post_id'];
             ?>
             <div class="col-lg-12">

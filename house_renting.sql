@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 29, 2023 at 06:09 PM
+-- Generation Time: Nov 01, 2023 at 09:07 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -86,7 +86,7 @@ CREATE TABLE `category_req` (
 --
 
 INSERT INTO `category_req` (`cat_id`, `cat_name`, `cat_des`, `ctg_author_id`) VALUES
-(3, 'Resturant', 'Here we are talking about resturant where people eat by payment.', 1);
+(3, 'Resturant', 'Here we are talking about resturant, where people eat by payment.', 1);
 
 -- --------------------------------------------------------
 
@@ -155,9 +155,10 @@ CREATE TABLE `msg` (
 
 INSERT INTO `msg` (`msg_id`, `post_id`, `name`, `contact_info`, `msg`, `msg_reply`, `msg_time`) VALUES
 (2, 38, 'Anirban', 'anik@gmail.com', 'Location ?', 'Next to Talaimari Bazar Mosque', '2023-07-28 22:30:14'),
-(3, 38, 'Anik', 'anik@gmail.com', 'I want to rent this apartment.', 'Call me at 017123456789 number.', '2023-07-28 22:30:51'),
+(3, 38, 'Anik', 'anik@gmail.com', 'I want to rent this apartment.', 'Call me. 017123456789 is my mobile number.', '2023-07-28 22:30:51'),
 (5, 38, 'Tamim', 'tamim@gamil.com', 'How much rent??', 'BDT 8k', '2023-07-29 21:20:43'),
-(6, 37, 'Alvi', 'alvi@gmail.com', '2500 for each person? or total?', '2500 TK Per person', '2023-07-29 21:53:00');
+(6, 37, 'Alvi', 'alvi@gmail.com', '2500 for each person? or total?', '2500 TK Per person', '2023-07-29 21:53:00'),
+(7, 38, 'abc', 'alvi@gmail.com', 'msg', NULL, '2023-08-01 13:42:26');
 
 -- --------------------------------------------------------
 
@@ -191,7 +192,7 @@ INSERT INTO `posts` (`post_id`, `post_title`, `post_content`, `post_img`, `post_
 (34, 'ZY Land is available ', 'ZY Land is available.Rent about 8000TK/month.', '1688492711.jpeg', 6, 2, '2023-06-11', '2023-06-11', 1, 8000, 1),
 (35, 'abc', 'abc content', '1688493087.jpeg', 6, 2, '2023-06-26', '2023-06-26', 2, 2200, 1),
 (37, 'Seat available at ABC hostel', '     Seat available at ABC hostel from next month.2500/- per month for dual room for each seat.     ', '1688454323.jpeg', 7, 1, '2023-06-30', '2023-07-02', 1, 2500, 1),
-(38, 'Apartment available at Talaimari.', ' Apartment available at Talaimari from next July.Rent amount BDT 8000.', '1688454078.jpeg', 9, 1, '2023-07-04', '2023-07-04', 2, 80000, 1);
+(38, 'Apartment available at Talaimari.', '               Apartment available at Talaimari from next July.Rent amount BDT 8000.              ', '1688454078.jpeg', 9, 1, '2023-07-04', '2023-07-04', 2, 80000, 1);
 
 -- --------------------------------------------------------
 
@@ -326,7 +327,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `category_req`
 --
 ALTER TABLE `category_req`
-  MODIFY `cat_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `cat_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `city`
@@ -338,13 +339,13 @@ ALTER TABLE `city`
 -- AUTO_INCREMENT for table `city_req`
 --
 ALTER TABLE `city_req`
-  MODIFY `city_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `city_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `msg`
 --
 ALTER TABLE `msg`
-  MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `posts`

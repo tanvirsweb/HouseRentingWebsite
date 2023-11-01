@@ -35,7 +35,7 @@
         </div>
     </div>
 
-    <?php if(mysqli_num_rows($allmsg)>0){ ?>
+    <?php if( !empty($allmsg[0]) ){ ?>
     <div class="card shadow-lg border-0 rounded-lg mt-5 p-5">
     <div class="row justify-content-center">    
         <div class="col-lg-12">        

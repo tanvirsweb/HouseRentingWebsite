@@ -1,13 +1,14 @@
 <?php 
     if(isset($_POST['submit_msg'])){        
-        $obj->reply_msg($_POST);        
-        // echo '<script type="text/javascript">window.location.href="dashboard.php?view=postview&&id=$post_id";</script>';        
+        $obj->reply_msg($_POST); ?>       
+        <script type="text/javascript">window.location.href="dashboard.php?view=postview&&id=<?php $post_id ?>;</script>        
+<?php
     }    
 ?>
 
 <?php 
 $allmsg=$obj->get_msg($postdata['post_id']);
-if(mysqli_num_rows($allmsg)>0){ ?>
+if( 1 ){ ?>
     <div class="card shadow-lg border-0 rounded-lg mt-5 p-5">
     <div class="row justify-content-center">    
     <div class="col-lg-12">        

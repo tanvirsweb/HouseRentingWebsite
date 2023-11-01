@@ -25,7 +25,7 @@
 
         <div class="row">
         <?php         
-        if(mysqli_num_rows($posts)==0){
+        if( empty($posts[0]) ){
             echo '<h2 class="text-center">You have not posted anything</h2>';
         }
         foreach($posts as $postdata){ 

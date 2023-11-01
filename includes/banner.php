@@ -1,11 +1,11 @@
 
 <?php
-    $posts_banner=$obj->display_post_public();
+    // $posts_banner= $obj->display_post_public();
 ?>
 <div class="main-banner header-text">
     <div class="container-fluid">
         <div class="owl-banner owl-carousel">
-        <?php while($postdata=mysqli_fetch_assoc($posts_banner)){ ?>
+        <?php foreach($posts as $postdata){ ?>
             <div class="item">
                 <img src="upload/<?php echo $postdata['post_img']; ?>" alt="" style="height:60vh">
                 <div class="item-content">

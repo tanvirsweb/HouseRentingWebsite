@@ -1,5 +1,7 @@
 <?php    
-    $data= mysqli_fetch_assoc($obj->get_account_info());    
+    $data = $obj->get_account_info(); 
+    $data = $data[0];
+
     if(isset($_POST['update_account'])){
         $msg=$obj->update_account($_POST);
         echo '<script type="text/javascript">window.location.href="account_setting.php";</script>';   
@@ -13,7 +15,8 @@
         <?php if(isset($msg)){echo $msg;} ?>
     </div>
 <!-- enctype="multipart/form-data" we will take file input -->
-    <form action="" method="POST" enctype="multipart/form-data" class="row">     
+    <form action="" method="POST" enctype="multipart/form-data" class="row">           
+
         <div class="form-group">
             <label class="mb-1" for="name">Name</label>
             <input name="name" class="form-control py-4" id="name" type="text" value="<?php if($_SESSION['person']=='admin') echo $data['admin_name']; else echo $data['user_name'];?>" required/>
@@ -35,7 +38,7 @@
         
         <div>
             <input type="submit" id="submit" name="update_account" value="Update Account" class="btn btn-primary">
-        </div>
+        </div>        
     </form>
 </div>
 <script>

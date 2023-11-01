@@ -6,9 +6,9 @@
         <div class="sidebar-heading">
             <h2>Recent Posts</h2>
         </div>
-        <div class="content">
+        <div class="content overflow-hide-scrollbar" style="max-height: 120vh;">
             <ul>
-            <?php while($postdata=mysqli_fetch_assoc($posts_recent)){ ?>
+            <?php foreach($posts_recent as $postdata){ ?>
                 <li>
                     <!-- <a href="single_post.php?view=postview&&id=<?php echo $postdata['post_id'];?>"> -->
                     <a href="index.php?view=postview&&id=<?php echo $postdata['post_id'];?>">

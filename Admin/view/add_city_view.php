@@ -19,7 +19,7 @@
         </div>
         <div class="form-group">
             <label class="mb-1" for="post_code">Post/ZIP Code</label>
-            <input name="post_code" class="form-control py-4" id="post_code" type="text" required/>
+            <input name="post_code" class="form-control py-4" id="post_code" type="number" required/>
         </div>
         <input type="submit" name="add_city" value="Add City" class="btn btn-primary">
     </form>

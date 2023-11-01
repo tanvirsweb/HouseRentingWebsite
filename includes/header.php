@@ -9,7 +9,7 @@
 
         <ul class="navbar-nav ml-auto">
             <!-- $getcat is initialized in index.php &  single_post.php file -->
-        <?php while($category=mysqli_fetch_assoc($getcat)){ 
+        <?php foreach($getcat as $category){ 
             if(isset($_GET['status'])){                
                 if($_GET['status']=='filterctg' and $_GET['ctg']==$category['cat_name']){
                     echo '<li class="nav-item active">';

@@ -10,7 +10,6 @@
     elseif(isset($_GET['view']) && isset($_GET['id'])){
       if($_GET['view']=='postview'){
           $posts=$obj->get_post_info($_GET['id']);
-          // $posts=$obj->display_post_public();
       }
     }
     else{
@@ -42,9 +41,9 @@
     ?>
     <!-- call to action  download ..-->
 
-    <!-- <?php
+    <?php
         // include_once("includes/cta.php");
-    ?> -->
+    ?>
     <?php 
       if(empty($_GET['view'])){
         include_once('includes/filter_search.php'); 

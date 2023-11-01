@@ -8,7 +8,7 @@
                 <?php 
                 // $allcat=$getcat; will set $allcat to null why??because it used "mysqli_fetch_assos() once.
                 $allcat=$obj->display_category();
-                while($category=mysqli_fetch_assoc($allcat)){ 
+                foreach($allcat as $category){ 
                 ?>
                     <li><a href="index.php?status=filterctg&&ctg=<?php echo $category['cat_name']; ?>">- <?php echo $category['cat_name']; ?> </a></li>
                 <?php } ?>

@@ -8,7 +8,8 @@
             $approved=1;        
         else //if($_GET['status']=='edtcityreq'){   
             $approved=0;                    
-        $ctgdata=mysqli_fetch_assoc( $obj->get_City_byID($_GET['id'],$approved) );
+        $ctgdata=$obj->get_City_byID($_GET['id'],$approved);
+        $ctgdata = $ctgdata[0];
     }
 ?>
 

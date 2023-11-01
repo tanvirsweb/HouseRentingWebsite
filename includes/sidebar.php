@@ -3,7 +3,7 @@
     $posts=$obj->getAllCity();
 ?>
 <div class="col-lg-4">
-    <div class="sidebar">
+    <div class="sidebar mx-2 shadow p-3">
         <div class="row">
             <!-- search -->
             <!-- <?php include_once("search_sidebar.php"); ?> -->
@@ -21,7 +21,7 @@
                     </div>
                     <div class="content">
                         <ul>
-                        <?php while($postdata=mysqli_fetch_assoc($posts)){ ?>
+                        <?php foreach($posts as $postdata){ ?>
                             <li><a href="#"><?php echo $postdata['city_name']; ?></a></li>
                         <?php } ?>                        
                         </ul>

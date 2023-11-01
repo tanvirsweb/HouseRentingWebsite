@@ -37,7 +37,7 @@
             <select name="city" class="form-control" id="city" required>
                 <?php 
                 $allcity=$obj->getAllCity();
-                while($city=mysqli_fetch_assoc($allcity)){ ?>
+                foreach($allcity as $city){ ?>
                     <option value="<?php echo $city['city_id']; ?>">
                         <?php echo $city['city_name']; ?>
                     </option>
@@ -49,7 +49,7 @@
             <select name="post_category" class="form-control" id="post_category" required>
                 <?php 
                 $categoryName=$obj->display_category();
-                while($category=mysqli_fetch_assoc($categoryName)){ ?>
+                foreach($categoryName as $category){ ?>
                     <option value="<?php echo $category['cat_id']; ?>">
                         <?php echo $category['cat_name']; ?>
                     </option>

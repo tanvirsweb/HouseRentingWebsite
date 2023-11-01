@@ -40,16 +40,15 @@
                                         <option value="All">All</option>
                                         <!-- <option value="0" selected="selected">Kalihati</option> -->
                                         <?php
-                                            $query_run=$obj->getAllCity();
-                                            if(mysqli_num_rows($query_run) > 0)
-                                            {
-                                                foreach($query_run as $row){
+                                            $query_run=$obj->getAllCity();                                            
+                                            foreach($query_run as $row){
                                                 if($row['city_id']==$_POST['city_id']){?>
-                                                <option selected="selected" value="<?php echo $row['city_id']; ?>"><?php echo $row['city_name']; ?></option>
+                                                    <option selected="selected" value="<?php echo $row['city_id']; ?>"><?php echo $row['city_name']; ?></option>
                                         <?php 
                                                 }else{ ?>
-                                                <option value="<?php echo $row['city_id']; ?>"><?php echo $row['city_name']; ?></option>
-                                        <?php   }}}?>                            
+                                                    <option value="<?php echo $row['city_id']; ?>"><?php echo $row['city_name']; ?></option>
+                                        <?php   }
+                                            }?>                            
                                     </select>
                                 </div>
                             </div>

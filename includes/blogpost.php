@@ -1,10 +1,10 @@
 <?php 
     // $posts=$obj->display_post_public();
 ?>
-<div class="col-lg-8">
+<div class="col-lg-8 overflow-hide-scrollbar" style="max-height: 235vh;">
     <div class="all-blog-posts">
         <div class="row">
-        <?php while($postdata=mysqli_fetch_assoc($posts)){ 
+        <?php foreach($posts as $postdata){ 
             $post_id=$postdata['post_id'];
             ?>
             <div class="col-lg-12">

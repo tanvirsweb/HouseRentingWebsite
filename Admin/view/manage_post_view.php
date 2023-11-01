@@ -37,7 +37,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php while($postdata=mysqli_fetch_assoc($posts)){ ?>
+                <?php foreach($posts as $postdata){ ?>
                     <tr>
                         <td><?php echo $postdata['post_id']; ?></td>
                         <td><?php echo $postdata['post_title']; ?></td>

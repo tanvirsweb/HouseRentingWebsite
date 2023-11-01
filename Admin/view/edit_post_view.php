@@ -5,7 +5,7 @@
         if($_GET['status']='editpost'){
             $id=$_GET['id'];
             $postdata=$obj->get_post_info($id);
-            $postdata=mysqli_fetch_assoc($postdata);
+            $postdata= $postdata[0];
             // Fetch a result row as an associative array:
             //convert each tupple from query to 1 associative array each.Here we have only 1 tuple.So we can use it to access info of 1 tuple.Otherwise we need to use it inside WHILE() loop condition
         }
@@ -13,6 +13,8 @@
 
     if(isset($_POST['update_post'])){
         $msg=$obj->edit_post($_POST);
+        $postdata=$obj->get_post_info($id);
+        $postdata= $postdata[0];
     }
 ?>
 
@@ -52,7 +54,7 @@
             <select name="city" class="form-control" id="city" required>
                 <?php 
                 $allcity=$obj->getAllCity();
-                while($city=mysqli_fetch_assoc($allcity)){ 
+                foreach($allcity as $city){ 
                     if($postdata['city_id']==$city['city_id']){ ?>
                         <option value="<?php echo $city['city_id']; ?>" selected>
                     <?php } else{?>
@@ -67,7 +69,7 @@
             <select name="post_category" class="form-control" id="post_category" required>
                 <?php
                 $categoryName=$obj->display_category();
-                while($category=mysqli_fetch_assoc($categoryName)){ 
+                foreach($categoryName as $category){ 
                      if($postdata['cat_id']==$category['cat_id']){ ?>
                         <option value="<?php echo $category['cat_id']; ?>" selected>
                     <?php } else{ ?>
@@ -81,8 +83,13 @@
         <div class="form-group">
             <label class="mb-1" for="post_status">Post Status</label>
             <select name="post_status" class="form-control" id="post_status" required>
-                <option value="1" selected="selected">Published</option>
-                <option value="0">Unpublished</option>
+                <?php if($postdata['post_status']==1){ ?>
+                    <option value="1" selected="selected">Published</option>
+                    <option value="0">Unpublished</option>
+                <?php }else{ ?>
+                    <option value="1">Published</option>
+                    <option value="0" selected="selected">Unpublished</option>
+                <?php } ?>
             </select>
         </div>
         <div>

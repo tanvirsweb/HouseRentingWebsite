@@ -11,7 +11,8 @@
         else{//edtctgreq
             $approved=0;//get category from category_req       
         }
-        $ctgdata=mysqli_fetch_assoc( $obj->get_category_byID($_GET['id'],$approved) );
+        $ctgdata = $obj->get_category_byID($_GET['id'],$approved);
+        $ctgdata = $ctgdata[0];
             //convert each tupple from query to an associative array each.Here we have only 1 tuple.So we don't need to use it inside while loop condition
     }
     
