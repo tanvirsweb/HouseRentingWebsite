@@ -8,8 +8,9 @@
                 //code..for XAMPP
                 $username="root";
                 $password="";
-                $dbh=new PDO('mysql:host=localhost;dbname=house_renting',$username,$password);
-                return $dbh;
+                $pdo = new PDO('mysql:host=localhost;dbname=house_renting',$username,$password);
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                return $pdo;
             }
             catch(PDOException $e){
                 print "Error!: ".$e->getMessage()."<br>";
@@ -357,8 +358,10 @@
                 if( $stmt->execute(array($id, $email)) && $stmt->rowCount()==0 ){
                     if($password==$old_password || md5($password)==$old_password){
                         $stmt = $this->connect()->prepare("UPDATE admin_info SET admin_name=?,admin_email=? WHERE admin_id=?;");
-                        if( $stmt->execute(array($name, $email, $id)) )
-                            return "Account Updated Successfully !!";   
+                        if( $stmt->execute(array($name, $email, $id)) ){
+                            $_SESSION['person_name']=$name;//update User/admin name for Showing in Side Navaigation bar
+                            return "Account Updated Successfully !!"; 
+                        }
                         else {
                             $stmt = null;
                             exit();
@@ -384,8 +387,10 @@
                     // pass not changed?
                     if($password==$old_password || md5($password)==$old_password){
                         $stmt = $this->connect()->prepare("UPDATE user_info SET user_name=?,user_email=? WHERE user_id=?");
-                        if( $stmt->execute(array($name, $email, $id)) )
+                        if( $stmt->execute(array($name, $email, $id)) ){
+                            $_SESSION['person_name']=$name;//update User/admin name for Showing in Side Navaigation bar
                             return "Account Updated Successfully !!"; 
+                        }
                         else {
                             $stmt = null;
                             exit();
@@ -644,8 +649,8 @@
                 exit();
         }
         public function approve_category($id){
-            $stmt = $this->connect()->prepare("SELECT* FROM category_ req WHERE cat_id=?;");
-            if( $stmt->execute(arrary($Id)) ){                
+            $stmt = $this->connect()->prepare("SELECT* FROM category_req WHERE cat_id=?;");
+            if( $stmt->execute(array($id)) ){                
                 $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 $data = $data[0];
             }
@@ -653,10 +658,10 @@
             $cat_des=$data['cat_des'];
             $ctg_author_id=$data['ctg_author_id'];
             $stmt = $this->connect()->prepare("INSERT INTO category (cat_name,cat_des,ctg_author_id) VALUE(?, ?, ?);");
-            if( $stmt->execute(arrary($cat_name,$cat_des,$ctg_author_id)) ){ 
+            if( $stmt->execute(array($cat_name,$cat_des,$ctg_author_id)) ){ 
                 //get ctg data from 'category_req' by id > insert these tuple(row) in 'category' table > delete this row from 'category_req'               
                 $stmt = $this->connect()->prepare("DELETE FROM category_req WHERE cat_id=?;");
-                if( $stmt->execute(arrary($id)) )
+                if( $stmt->execute(array($id)) )
                     return "Category Approved Successfully!!";
                 else         
                     return "Failed to  Approve Category!!";
