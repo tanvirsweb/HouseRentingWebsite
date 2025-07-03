@@ -49,6 +49,12 @@ Batch: CSE_19_A
 
 ---
 
+## 📺 [Video of Live Website](https://youtu.be/WOR251usq0c)
+
+[![Watch the Demo](https://img.youtube.com/vi/WOR251usq0c/maxresdefault.jpg)](https://youtu.be/WOR251usq0c)
+
+Click the thumbnail above to watch a walkthrough of the live website on YouTube.
+
 ## 📁 Project Structure
 
 ```
@@ -111,6 +117,12 @@ HouseRentingWebsite_with_PDO/
 | [adm@gmail.com](mailto:adm@gmail.com)       | 123      |
 | [tanvir@gmail.com](mailto:tanvir@gmail.com) | 123      |
 | [abc@gmail.com](mailto:abc@gmail.com)       | 123      |
+
+## 🔑 User Credentials
+
+| Email                                   | Password |
+| --------------------------------------- | -------- |
+| [alvi@gmail.com](mailto:alvi@gmail.com) | 123      |
 
 > **Note:** Passwords are stored as `md5('123')` in the `admin_info` table.
 
